@@ -14,6 +14,7 @@ RUN apt-get update -y \
 
 RUN apt-get install -y --no-install-recommends \
     autoconf \
+    automake \
     build-essential \
     ca-certificates \
     g++ \
@@ -49,6 +50,3 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
  && locale-gen en_US.UTF-8 \
  && dpkg-reconfigure locales \
  && /usr/sbin/update-locale LANG=en_US.UTF-8
-
-RUN apt-get install -y --no-install-recommends \
-    automake
