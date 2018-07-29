@@ -19,6 +19,7 @@ RUN apt-get install -y --no-install-recommends \
     ca-certificates \
     g++ \
     git \
+    less \
     libboost-chrono-dev \
     libboost-dev \
     libboost-filesystem-dev \
@@ -38,6 +39,7 @@ RUN apt-get install -y --no-install-recommends \
     mc \
     mingw-w64 \
     mingw-w64-x86-64-dev \
+    openssh-client \
     pkg-config \
     qt5-default \
     qtbase5-dev \
