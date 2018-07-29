@@ -3,9 +3,7 @@ MAINTAINER HLXEasy <hlxeasy@gmail.com>
 
 ENV WORK_DIR=/data/work \
     DEBIAN_FRONTEND=noninteractive \
-    PERL_USE_UNSAFE_INC=1 \
-    LC_ALL=en_US.UTF-8 \
-    TZ='Europe/Berlin'
+    LC_ALL=en_US.UTF-8
 
 # Mount point for development workspace
 RUN mkdir -p ${WORK_DIR}
@@ -15,30 +13,42 @@ RUN apt-get update -y \
  && apt-get upgrade -y
 
 RUN apt-get install -y --no-install-recommends \
-    locales \
-    mc \
+    autoconf \
+    build-essential \
+    ca-certificates \
     g++ \
     git \
-    build-essential \
-    libssl-dev \
-    libevent-dev \
-    libseccomp-dev \
+    libboost-chrono-dev \
+    libboost-dev \
+    libboost-filesystem-dev \
+    libboost-iostreams-dev \
+    libboost-program-options-dev \
+    libboost-system-dev \
+    libboost-thread-dev \
     libcap-dev \
-    libicu-dev \
-    libbz2-dev \
-    pkg-config \
-    autoconf \
-    automake \
-    autotools-dev \
+    libevent-dev \
+    libqt5webchannel5-dev \
+    libseccomp-dev \
+    libssl-dev \
     libtool \
-    ca-certificates \
-    zlib1g-dev \
-    qtbase5-dev \
-    qttools5-dev \
-    qtchooser \
-    qtbase5-dev-tools \
-    qtwebengine5-dev \
+    libz-dev \
+    locales \
+    make \
+    mc \
     mingw-w64 \
     mingw-w64-x86-64-dev \
-    python-dev \
+    pkg-config \
+    qt5-default \
+    qtbase5-dev \
+    qttools5-dev-tools \
+    qtwebengine5-dev \
     wget
+
+# Set locale to UTF8
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
+ && locale-gen en_US.UTF-8 \
+ && dpkg-reconfigure locales \
+ && /usr/sbin/update-locale LANG=en_US.UTF-8
+
+RUN apt-get install -y --no-install-recommends \
+    automake
