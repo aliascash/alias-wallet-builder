@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM fedora:28
 MAINTAINER HLXEasy <hlxeasy@gmail.com>
 
 ENV WORK_DIR=/data/work \
@@ -9,46 +9,30 @@ ENV WORK_DIR=/data/work \
 RUN mkdir -p ${WORK_DIR}
 VOLUME ${WORK_DIR}
 
-RUN apt-get update -y \
- && apt-get upgrade -y
+RUN yum update -y
 
-RUN apt-get install -y --no-install-recommends \
+RUN yum install -y \
     autoconf \
     automake \
-    build-essential \
-    ca-certificates \
-    g++ \
+    boost-devel \
+    gcc-c++ \
     git \
     less \
-    libboost-chrono-dev \
-    libboost-dev \
-    libboost-filesystem-dev \
-    libboost-iostreams-dev \
-    libboost-program-options-dev \
-    libboost-system-dev \
-    libboost-thread-dev \
-    libcap-dev \
-    libevent-dev \
-    libqt5webchannel5-dev \
-    libseccomp-dev \
-    libssl-dev \
+    libevent-devel \
+    libseccomp-devel \
     libtool \
-    libz-dev \
-    locales \
+    libzstd-devel \
     make \
     mc \
-    mingw-w64 \
-    mingw-w64-x86-64-dev \
-    openssh-client \
+    openssh-clients \
+    openssl-devel \
+    patch \
     pkg-config \
-    qt5-default \
-    qtbase5-dev \
-    qttools5-dev-tools \
-    qtwebengine5-dev \
+    qt5 \
+    qt5-devel \
+    qt5-qtwebengine-devel \
     wget
 
-# Set locale to UTF8
-RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
- && locale-gen en_US.UTF-8 \
- && dpkg-reconfigure locales \
- && /usr/sbin/update-locale LANG=en_US.UTF-8
+#RUN yum install -y \
+
+#RUN yum install -y \
