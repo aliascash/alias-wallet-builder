@@ -18,6 +18,7 @@ RUN yum install -y \
     gcc-c++ \
     git \
     less \
+    libcap-devel \
     libevent-devel \
     libseccomp-devel \
     libtool \
