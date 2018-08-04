@@ -33,7 +33,3 @@ RUN yum install -y \
     qt5-devel \
     qt5-qtwebengine-devel \
     wget
-
-#RUN yum install -y \
-
-#RUN yum install -y \
