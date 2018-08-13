@@ -14,6 +14,7 @@ RUN apt-get update -y \
 
 RUN apt-get install -y --no-install-recommends \
     autoconf \
+    autogen \
     automake \
     build-essential \
     ca-certificates \
