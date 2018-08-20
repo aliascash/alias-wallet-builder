@@ -47,6 +47,17 @@ RUN apt-get install -y --no-install-recommends \
     qtwebengine5-dev \
     wget
 
+ENV OPENSSL_VERSION="1.1.0i"
+RUN wget https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz \
+ && tar xzvf openssl-${OPENSSL_VERSION}.tar.gz \
+ && cd openssl-${OPENSSL_VERSION} \
+ && ./config -Wl,--enable-new-dtags,-rpath,'$(LIBRPATH)' \
+ && make \
+ && make install \
+ && cd -
+ && rm -rf openssl-${OPENSSL_VERSION}.tar.gz \
+ && rm -rf openssl-${OPENSSL_VERSION} \
+
 # Set locale to UTF8
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
  && locale-gen en_US.UTF-8 \
