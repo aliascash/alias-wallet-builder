@@ -49,7 +49,7 @@ node('docker') {
     }
 
     stage('Build Ubuntu 16LTS image') {
-        spectre_base = docker.build("spectreproject/spectre-builder-ubuntu-16LTS", "Ubuntu/16LTS/Dockerfile")
+        spectre_base = docker.build("spectreproject/spectre-builder-ubuntu-16lts", "Ubuntu/16LTS/Dockerfile")
     }
     stage('Push Ubuntu 16LTS image') {
         echo("Push of Ubuntu 16-LTS image disabled at the moment...")
