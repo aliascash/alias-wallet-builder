@@ -1,5 +1,7 @@
-FROM desktopcontainers/raspberrypi
+FROM arm32v7/debian:stretch-slim
 MAINTAINER HLXEasy <hlxeasy@gmail.com>
+
+COPY RaspberryPi/qemu-arm-static /usr/bin
 
 ENV WORK_DIR=/data/work
 
