@@ -46,7 +46,11 @@ node('docker') {
     }
 
     stage('Build Raspberry Pi image') {
-        spectre_builder = docker.build("spectreproject/spectre-builder-raspi", "./RaspberryPi/")
+        // Copy step on Dockerfile is not working if Dockerfile is not located on root dir!
+        // So copy required Dockerfile to root dir for each build
+        sh "cp ./RaspberryPi/Dockerfile ."
+        spectre_builder = docker.build("spectreproject/spectre-builder-raspi")
+        sh "rm Dockerfile"
     }
     stage('Push Raspberry Pi image') {
         docker.withRegistry('https://registry.hub.docker.com', '051efa8c-aebd-40f7-9cfd-0053c413266e') {
