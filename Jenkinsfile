@@ -220,7 +220,7 @@ pipeline {
                     }
                     post {
                         always {
-                            sh "docker system prune --all --force --force"
+                            sh "docker system prune --all --force"
                         }
                     }
                 }
