@@ -53,3 +53,15 @@ RUN apt-get install -y --no-install-recommends \
 # So install compile dependencies
 RUN apt-get install -y --no-install-recommends \
     libncurses5-dev
+
+# Download 'dialog' sources, compile and install
+RUN wget https://invisible-island.net/datafiles/release/dialog.tar.gz /tmp/ \
+ && cd / \
+ && tar xzf /tmp/dialog.tar.gz \
+ && mv /dialog-* /dialog
+ && cd /dialog \
+ && ./configure \
+ && make \
+ && mkdir /newDialog \
+ && make install DESTDIR=/newDialog/ \
+ && rm -rf /tmp/dialog.tar.gz /dialog
