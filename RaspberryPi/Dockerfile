@@ -47,3 +47,9 @@ RUN apt-get install -y --no-install-recommends \
     qttools5-dev-tools \
     qtwebengine5-dev \
     wget
+
+# Latest and greatest version of 'dialog' must be compiled explicitly
+# as long as the official package contains 2016 code version.
+# So install compile dependencies
+RUN apt-get install -y --no-install-recommends \
+    libncurses5-dev
