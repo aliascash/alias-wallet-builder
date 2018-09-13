@@ -58,7 +58,7 @@ RUN apt-get install -y --no-install-recommends \
 RUN wget https://invisible-island.net/datafiles/release/dialog.tar.gz /tmp/ \
  && cd / \
  && tar xzf /tmp/dialog.tar.gz \
- && mv /dialog-* /dialog
+ && mv /dialog-* /dialog \
  && cd /dialog \
  && ./configure \
  && make \
