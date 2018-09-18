@@ -242,7 +242,7 @@ pipeline {
                 }
             }
         }
-        stage('Build and upload image') {
+        stage('Release and upload image') {
             when {
                 branch 'master'
             }
