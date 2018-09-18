@@ -5,12 +5,13 @@ pipeline {
     options {
         timestamps()
         timeout(time: 2, unit: 'HOURS')
-//	ansiColor('xterm')
         buildDiscarder(logRotator(numToKeepStr: '30', artifactNumToKeepStr: '5'))
     }
     environment {
         // In case another branch beside master or develop should be deployed, enter it here
         BRANCH_TO_DEPLOY = 'xyz'
+        // This version will be used for the image tags if the branch is merged to master
+        BUILDER_IMAGE_VERSION = '1.1'
         DISCORD_WEBHOOK = credentials('991ce248-5da9-4068-9aea-8a6c2c388a19')
     }
     stages {
@@ -130,7 +131,7 @@ pipeline {
         }
         stage('Build and upload image') {
             when {
-                anyOf { branch 'develop'; branch 'master'; branch "${BRANCH_TO_DEPLOY}" }
+                anyOf { branch 'develop'; branch "${BRANCH_TO_DEPLOY}" }
             }
             parallel {
                 stage('Debian') {
@@ -241,22 +242,123 @@ pipeline {
                 }
             }
         }
+        stage('Release and upload image') {
+            when {
+                branch 'master'
+            }
+            parallel {
+                stage('Debian') {
+                    agent {
+                        label "docker"
+                    }
+                    steps {
+                        script {
+                            def spectre_base = docker.build("spectreproject/spectre-builder", "--rm .")
+                            docker.withRegistry('https://registry.hub.docker.com', '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                spectre_base.push("${BUILDER_IMAGE_VERSION}")
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            sh "docker system prune --all --force"
+                        }
+                    }
+                }
+                stage('CentOS') {
+                    agent {
+                        label "docker"
+                    }
+                    steps {
+                        script {
+                            // Copy step on Dockerfile is not working if Dockerfile is not located on root dir!
+                            // So copy required Dockerfile to root dir for each build
+                            sh "cp ./CentOS/Dockerfile ."
+                            def spectre_base = docker.build("spectreproject/spectre-builder-centos", "--rm .")
+                            docker.withRegistry('https://registry.hub.docker.com', '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                spectre_base.push("${BUILDER_IMAGE_VERSION}")
+                            }
+                            sh "rm Dockerfile"
+                        }
+                    }
+                    post {
+                        always {
+                            sh "docker system prune --all --force"
+                        }
+                    }
+                }
+                stage('Fedora') {
+                    agent {
+                        label "docker"
+                    }
+                    steps {
+                        script {
+                            // Copy step on Dockerfile is not working if Dockerfile is not located on root dir!
+                            // So copy required Dockerfile to root dir for each build
+                            sh "cp ./Fedora/Dockerfile ."
+                            def spectre_base = docker.build("spectreproject/spectre-builder-fedora", "--rm .")
+                            docker.withRegistry('https://registry.hub.docker.com', '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                spectre_base.push("${BUILDER_IMAGE_VERSION}")
+                            }
+                            sh "rm Dockerfile"
+                        }
+                    }
+                    post {
+                        always {
+                            sh "docker system prune --all --force"
+                        }
+                    }
+                }
+                stage('Raspberry Pi') {
+                    agent {
+                        label "docker"
+                    }
+                    steps {
+                        script {
+                            // Copy step on Dockerfile is not working if Dockerfile is not located on root dir!
+                            // So copy required Dockerfile to root dir for each build
+                            sh "cp ./RaspberryPi/Dockerfile ."
+                            def spectre_base = docker.build("spectreproject/spectre-builder-raspi", "--rm .")
+                            docker.withRegistry('https://registry.hub.docker.com', '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                spectre_base.push("${BUILDER_IMAGE_VERSION}")
+                            }
+                            sh "rm Dockerfile"
+                        }
+                    }
+                    post {
+                        always {
+                            sh "docker system prune --all --force"
+                        }
+                    }
+                }
+                stage('Ubuntu') {
+                    agent {
+                        label "docker"
+                    }
+                    steps {
+                        script {
+                            // Copy step on Dockerfile is not working if Dockerfile is not located on root dir!
+                            // So copy required Dockerfile to root dir for each build
+                            sh "cp ./Ubuntu/latest/Dockerfile ."
+                            def spectre_base = docker.build("spectreproject/spectre-builder-ubuntu", "--rm .")
+                            docker.withRegistry('https://registry.hub.docker.com', '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                spectre_base.push("${BUILDER_IMAGE_VERSION}")
+                            }
+                            sh "rm Dockerfile"
+                        }
+                    }
+                    post {
+                        always {
+                            sh "docker system prune --all --force"
+                        }
+                    }
+                }
+            }
+        }
     }
     post {
         success {
             script {
-                /*
-                 * Disabled until email notification requirements where set up
-                if (!hudson.model.Result.SUCCESS.equals(currentBuild.getPreviousBuild()?.getResult())) {
-                    emailext(
-                            subject: "GREEN: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-                            body: '${JELLY_SCRIPT,template="html"}',
-                            recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-                            to: "to@be.defined",
-                            replyTo: "to@be.defined"
-                    )
-                }
-                */
                 discordSend(
                         description: "**Build:**  #$env.BUILD_NUMBER\n**Status:**  Success\n",
                         footer: 'Jenkins - the builder',
@@ -270,16 +372,6 @@ pipeline {
             }
         }
         unstable {
-            /*
-             * Disabled until email notification requirements where set up
-            emailext(
-                    subject: "YELLOW: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-                    body: '${JELLY_SCRIPT,template="html"}',
-                    recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-                    to: "to@be.defined",
-                    replyTo: "to@be.defined"
-            )
-            */
             discordSend(
                     description: "**Build:**  #$env.BUILD_NUMBER\n**Status:**  Unstable\n",
                     footer: 'Jenkins - the builder',
@@ -292,16 +384,6 @@ pipeline {
             )
         }
         failure {
-            /*
-             * Disabled until email notification requirements where set up
-            emailext(
-                    subject: "RED: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-                    body: '${JELLY_SCRIPT,template="html"}',
-                    recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-                    to: "to@be.defined",
-                    replyTo: "to@be.defined"
-            )
-            */
             discordSend(
                     description: "**Build:**  #$env.BUILD_NUMBER\n**Status:**  Failed\n",
                     footer: 'Jenkins - the builder',
