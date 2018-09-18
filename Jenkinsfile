@@ -10,6 +10,7 @@ pipeline {
     environment {
         // In case another branch beside master or develop should be deployed, enter it here
         BRANCH_TO_DEPLOY = 'xyz'
+        // This version will be used for the image tags if the branch is merged to master
         BUILDER_IMAGE_VERSION = '1.1'
         DISCORD_WEBHOOK = credentials('991ce248-5da9-4068-9aea-8a6c2c388a19')
     }
