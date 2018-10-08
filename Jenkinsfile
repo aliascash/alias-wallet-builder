@@ -42,7 +42,11 @@ pipeline {
                     }
                     steps {
                         script {
+                            // Copy step on Dockerfile is not working if Dockerfile is not located on root dir!
+                            // So copy required Dockerfile to root dir for each build
+                            sh "cp ./Debian/Dockerfile ."
                             docker.build("spectreproject/spectre-builder", "--rm .")
+                            sh "rm Dockerfile"
                         }
                     }
                     post {
@@ -140,10 +144,14 @@ pipeline {
                     }
                     steps {
                         script {
+                            // Copy step on Dockerfile is not working if Dockerfile is not located on root dir!
+                            // So copy required Dockerfile to root dir for each build
+                            sh "cp ./Debian/Dockerfile ."
                             def spectre_builder_image = docker.build("spectreproject/spectre-builder", "--rm .")
                             docker.withRegistry('https://registry.hub.docker.com', '051efa8c-aebd-40f7-9cfd-0053c413266e') {
                                 spectre_builder_image.push("latest")
                             }
+                            sh "rm Dockerfile"
                         }
                     }
                     post {
@@ -253,10 +261,14 @@ pipeline {
                     }
                     steps {
                         script {
+                            // Copy step on Dockerfile is not working if Dockerfile is not located on root dir!
+                            // So copy required Dockerfile to root dir for each build
+                            sh "cp ./Debian/Dockerfile ."
                             def spectre_builder_image = docker.build("spectreproject/spectre-builder", "--rm .")
                             docker.withRegistry('https://registry.hub.docker.com', '051efa8c-aebd-40f7-9cfd-0053c413266e') {
                                 spectre_builder_image.push("${BUILDER_IMAGE_VERSION}")
                             }
+                            sh "rm Dockerfile"
                         }
                     }
                     post {
