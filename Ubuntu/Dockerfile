@@ -5,8 +5,6 @@ ENV WORK_DIR=/data/work \
     DEBIAN_FRONTEND=noninteractive \
     LC_ALL=en_US.UTF-8
 
-COPY Debian/stretch-backports.list /etc/apt/sources.list.d/
-
 RUN apt-get update -y \
  && apt-get upgrade -y
 
@@ -18,7 +16,7 @@ RUN apt-get install -y --no-install-recommends \
     g++ \
     git \
     less \
-    libboost1.67-all-dev \
+    libboost1.65-all-dev \
     libcap-dev \
     libevent-dev \
     libqt5webchannel5-dev \
