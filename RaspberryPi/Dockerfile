@@ -5,9 +5,7 @@ COPY RaspberryPi/qemu-arm-static /usr/bin
 
 ENV WORK_DIR=/data/work
 
-# Mount point for development workspace
-RUN mkdir -p ${WORK_DIR}
-VOLUME ${WORK_DIR}
+COPY Debian/stretch-backports.list /etc/apt/sources.list.d/
 
 RUN apt-get update -y \
  && apt-get upgrade -y
@@ -21,13 +19,7 @@ RUN apt-get install -y --no-install-recommends \
     g++ \
     git \
     less \
-    libboost-chrono-dev \
-    libboost-dev \
-    libboost-filesystem-dev \
-    libboost-iostreams-dev \
-    libboost-program-options-dev \
-    libboost-system-dev \
-    libboost-thread-dev \
+    libboost1.67-all-dev \
     libcap-dev \
     libevent-dev \
     libqt5webchannel5-dev \
