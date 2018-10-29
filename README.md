@@ -1,4 +1,10 @@
-# spectre-builder
+# Spectrecoin builder image
+
+[![Docker Stars](https://img.shields.io/docker/stars/spectreproject/spectre-builder.svg)](https://hub.docker.com/r/spectreproject/spectre-builder/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/spectreproject/spectre-builder.svg)](https://hub.docker.com/r/spectreproject/spectre-builder/)
+[![Build Status](https://travis-ci.org/spectreproject/spectre-builder.svg?branch=master)](https://travis-ci.org/spectreproject/spectre-builder/)
+[![ImageLayers](https://images.microbadger.com/badges/image/spectreproject/spectre-builder.svg)](https://microbadger.com/#/images/spectreproject/spectre-builder)
+
 ### Builder image for spectrecoin/spectrecoind compilation
 
 This repository contains a Dockerfile to create a builder image which could 
