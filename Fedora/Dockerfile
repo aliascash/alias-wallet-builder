@@ -1,4 +1,4 @@
-FROM fedora:28
+FROM fedora:29
 MAINTAINER HLXEasy <hlxeasy@gmail.com>
 
 ENV WORK_DIR=/data/work \
