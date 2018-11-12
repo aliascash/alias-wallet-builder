@@ -6,23 +6,26 @@ pipeline {
         timestamps()
         timeout(time: 2, unit: 'HOURS')
         buildDiscarder(logRotator(numToKeepStr: '30', artifactNumToKeepStr: '5'))
+        disableConcurrentBuilds()
     }
     environment {
         // In case another branch beside master or develop should be deployed, enter it here
         BRANCH_TO_DEPLOY = 'xyz'
         // This version will be used for the image tags if the branch is merged to master
-        BUILDER_IMAGE_VERSION = '1.1'
+        BUILDER_IMAGE_VERSION = '1.2'
         DISCORD_WEBHOOK = credentials('991ce248-5da9-4068-9aea-8a6c2c388a19')
     }
     stages {
         stage('Notification') {
             steps {
+                // Using result state 'ABORTED' to mark the message on discord with a white border.
+                // Makes it easier to distinguish job-start from job-finished
                 discordSend(
-                        description: "**Started build of branch $BRANCH_NAME**\n",
-                        footer: 'Jenkins - the builder',
+                        description: "Started build #$env.BUILD_NUMBER",
                         image: '',
                         link: "$env.BUILD_URL",
                         successful: true,
+                        result: "ABORTED",
                         thumbnail: 'https://wiki.jenkins-ci.org/download/attachments/2916393/headshot.png',
                         title: "$env.JOB_NAME",
                         webhookURL: "${DISCORD_WEBHOOK}"
@@ -42,7 +45,9 @@ pipeline {
                     }
                     steps {
                         script {
-                            docker.build("spectreproject/spectre-builder", "--rm .")
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f Debian/Dockerfile --rm -t spectreproject/spectre-builder-debian:latest ."
+                            }
                         }
                     }
                     post {
@@ -57,11 +62,9 @@ pipeline {
                     }
                     steps {
                         script {
-                            // Copy step on Dockerfile is not working if Dockerfile is not located on root dir!
-                            // So copy required Dockerfile to root dir for each build
-                            sh "cp ./CentOS/Dockerfile ."
-                            docker.build("spectreproject/spectre-builder-centos", "--rm .")
-                            sh "rm Dockerfile"
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f CentOS/Dockerfile --rm -t spectreproject/spectre-builder-centos:latest ."
+                            }
                         }
                     }
                     post {
@@ -76,11 +79,9 @@ pipeline {
                     }
                     steps {
                         script {
-                            // Copy step on Dockerfile is not working if Dockerfile is not located on root dir!
-                            // So copy required Dockerfile to root dir for each build
-                            sh "cp ./Fedora/Dockerfile ."
-                            docker.build("spectreproject/spectre-builder-fedora", "--rm .")
-                            sh "rm Dockerfile"
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f Fedora/Dockerfile --rm -t spectreproject/spectre-builder-fedora:latest ."
+                            }
                         }
                     }
                     post {
@@ -95,11 +96,9 @@ pipeline {
                     }
                     steps {
                         script {
-                            // Copy step on Dockerfile is not working if Dockerfile is not located on root dir!
-                            // So copy required Dockerfile to root dir for each build
-                            sh "cp ./RaspberryPi/Dockerfile ."
-                            docker.build("spectreproject/spectre-builder-raspi", "--rm .")
-                            sh "rm Dockerfile"
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f RaspberryPi/Dockerfile --rm -t spectreproject/spectre-builder-raspi:latest ."
+                            }
                         }
                     }
                     post {
@@ -114,11 +113,9 @@ pipeline {
                     }
                     steps {
                         script {
-                            // Copy step on Dockerfile is not working if Dockerfile is not located on root dir!
-                            // So copy required Dockerfile to root dir for each build
-                            sh "cp ./Ubuntu/Dockerfile ."
-                            docker.build("spectreproject/spectre-builder-ubuntu", "--rm .")
-                            sh "rm Dockerfile"
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f Ubuntu/Dockerfile --rm -t spectreproject/spectre-builder-ubuntu:latest ."
+                            }
                         }
                     }
                     post {
@@ -140,9 +137,9 @@ pipeline {
                     }
                     steps {
                         script {
-                            def spectre_base = docker.build("spectreproject/spectre-builder", "--rm .")
-                            docker.withRegistry('https://registry.hub.docker.com', '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                spectre_base.push("latest")
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f Debian/Dockerfile --rm -t spectreproject/spectre-builder-debian:latest ."
+                                sh "docker push spectreproject/spectre-builder-debian:latest"
                             }
                         }
                     }
@@ -158,14 +155,10 @@ pipeline {
                     }
                     steps {
                         script {
-                            // Copy step on Dockerfile is not working if Dockerfile is not located on root dir!
-                            // So copy required Dockerfile to root dir for each build
-                            sh "cp ./CentOS/Dockerfile ."
-                            def spectre_base = docker.build("spectreproject/spectre-builder-centos", "--rm .")
-                            docker.withRegistry('https://registry.hub.docker.com', '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                spectre_base.push("latest")
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f CentOS/Dockerfile --rm -t spectreproject/spectre-builder-centos:latest ."
+                                sh "docker push spectreproject/spectre-builder-centos:latest"
                             }
-                            sh "rm Dockerfile"
                         }
                     }
                     post {
@@ -180,14 +173,10 @@ pipeline {
                     }
                     steps {
                         script {
-                            // Copy step on Dockerfile is not working if Dockerfile is not located on root dir!
-                            // So copy required Dockerfile to root dir for each build
-                            sh "cp ./Fedora/Dockerfile ."
-                            def spectre_base = docker.build("spectreproject/spectre-builder-fedora", "--rm .")
-                            docker.withRegistry('https://registry.hub.docker.com', '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                spectre_base.push("latest")
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f Fedora/Dockerfile --rm -t spectreproject/spectre-builder-fedora:latest ."
+                                sh "docker push spectreproject/spectre-builder-fedora:latest"
                             }
-                            sh "rm Dockerfile"
                         }
                     }
                     post {
@@ -202,14 +191,10 @@ pipeline {
                     }
                     steps {
                         script {
-                            // Copy step on Dockerfile is not working if Dockerfile is not located on root dir!
-                            // So copy required Dockerfile to root dir for each build
-                            sh "cp ./RaspberryPi/Dockerfile ."
-                            def spectre_base = docker.build("spectreproject/spectre-builder-raspi", "--rm .")
-                            docker.withRegistry('https://registry.hub.docker.com', '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                spectre_base.push("latest")
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f RaspberryPi/Dockerfile --rm -t spectreproject/spectre-builder-raspi:latest ."
+                                sh "docker push spectreproject/spectre-builder-raspi:latest"
                             }
-                            sh "rm Dockerfile"
                         }
                     }
                     post {
@@ -224,14 +209,10 @@ pipeline {
                     }
                     steps {
                         script {
-                            // Copy step on Dockerfile is not working if Dockerfile is not located on root dir!
-                            // So copy required Dockerfile to root dir for each build
-                            sh "cp ./Ubuntu/Dockerfile ."
-                            def spectre_base = docker.build("spectreproject/spectre-builder-ubuntu", "--rm .")
-                            docker.withRegistry('https://registry.hub.docker.com', '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                spectre_base.push("latest")
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f Ubuntu/Dockerfile --rm -t spectreproject/spectre-builder-ubuntu:latest ."
+                                sh "docker push spectreproject/spectre-builder-ubuntu:latest"
                             }
-                            sh "rm Dockerfile"
                         }
                     }
                     post {
@@ -253,9 +234,9 @@ pipeline {
                     }
                     steps {
                         script {
-                            def spectre_base = docker.build("spectreproject/spectre-builder", "--rm .")
-                            docker.withRegistry('https://registry.hub.docker.com', '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                spectre_base.push("${BUILDER_IMAGE_VERSION}")
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f Debian/Dockerfile --rm -t spectreproject/spectre-builder-debian:${BUILDER_IMAGE_VERSION} ."
+                                sh "docker push spectreproject/spectre-builder-debian:${BUILDER_IMAGE_VERSION}"
                             }
                         }
                     }
@@ -271,14 +252,10 @@ pipeline {
                     }
                     steps {
                         script {
-                            // Copy step on Dockerfile is not working if Dockerfile is not located on root dir!
-                            // So copy required Dockerfile to root dir for each build
-                            sh "cp ./CentOS/Dockerfile ."
-                            def spectre_base = docker.build("spectreproject/spectre-builder-centos", "--rm .")
-                            docker.withRegistry('https://registry.hub.docker.com', '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                spectre_base.push("${BUILDER_IMAGE_VERSION}")
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f CentOS/Dockerfile --rm -t spectreproject/spectre-builder-centos:${BUILDER_IMAGE_VERSION} ."
+                                sh "docker push spectreproject/spectre-builder-centos:${BUILDER_IMAGE_VERSION}"
                             }
-                            sh "rm Dockerfile"
                         }
                     }
                     post {
@@ -293,14 +270,10 @@ pipeline {
                     }
                     steps {
                         script {
-                            // Copy step on Dockerfile is not working if Dockerfile is not located on root dir!
-                            // So copy required Dockerfile to root dir for each build
-                            sh "cp ./Fedora/Dockerfile ."
-                            def spectre_base = docker.build("spectreproject/spectre-builder-fedora", "--rm .")
-                            docker.withRegistry('https://registry.hub.docker.com', '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                spectre_base.push("${BUILDER_IMAGE_VERSION}")
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f Fedora/Dockerfile --rm -t spectreproject/spectre-builder-fedora:${BUILDER_IMAGE_VERSION} ."
+                                sh "docker push spectreproject/spectre-builder-fedora:${BUILDER_IMAGE_VERSION}"
                             }
-                            sh "rm Dockerfile"
                         }
                     }
                     post {
@@ -315,14 +288,10 @@ pipeline {
                     }
                     steps {
                         script {
-                            // Copy step on Dockerfile is not working if Dockerfile is not located on root dir!
-                            // So copy required Dockerfile to root dir for each build
-                            sh "cp ./RaspberryPi/Dockerfile ."
-                            def spectre_base = docker.build("spectreproject/spectre-builder-raspi", "--rm .")
-                            docker.withRegistry('https://registry.hub.docker.com', '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                spectre_base.push("${BUILDER_IMAGE_VERSION}")
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f RaspberryPi/Dockerfile --rm -t spectreproject/spectre-builder-raspi:${BUILDER_IMAGE_VERSION} ."
+                                sh "docker push spectreproject/spectre-builder-raspi:${BUILDER_IMAGE_VERSION}"
                             }
-                            sh "rm Dockerfile"
                         }
                     }
                     post {
@@ -337,14 +306,10 @@ pipeline {
                     }
                     steps {
                         script {
-                            // Copy step on Dockerfile is not working if Dockerfile is not located on root dir!
-                            // So copy required Dockerfile to root dir for each build
-                            sh "cp ./Ubuntu/Dockerfile ."
-                            def spectre_base = docker.build("spectreproject/spectre-builder-ubuntu", "--rm .")
-                            docker.withRegistry('https://registry.hub.docker.com', '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                spectre_base.push("${BUILDER_IMAGE_VERSION}")
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f Ubuntu/Dockerfile --rm -t spectreproject/spectre-builder-ubuntu:${BUILDER_IMAGE_VERSION} ."
+                                sh "docker push spectreproject/spectre-builder-ubuntu:${BUILDER_IMAGE_VERSION}"
                             }
-                            sh "rm Dockerfile"
                         }
                     }
                     post {
@@ -359,9 +324,17 @@ pipeline {
     post {
         success {
             script {
+                if (!hudson.model.Result.SUCCESS.equals(currentBuild.getPreviousBuild()?.getResult())) {
+                    emailext(
+                            subject: "GREEN: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                            body: '${JELLY_SCRIPT,template="html"}',
+                            recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+//                            to: "to@be.defined",
+//                            replyTo: "to@be.defined"
+                    )
+                }
                 discordSend(
-                        description: "**Build:**  #$env.BUILD_NUMBER\n**Status:**  Success\n",
-                        footer: 'Jenkins - the builder',
+                        description: "Build #$env.BUILD_NUMBER finished successfully",
                         image: '',
                         link: "$env.BUILD_URL",
                         successful: true,
@@ -372,21 +345,34 @@ pipeline {
             }
         }
         unstable {
+            emailext(
+                    subject: "YELLOW: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                    body: '${JELLY_SCRIPT,template="html"}',
+                    recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+//                    to: "to@be.defined",
+//                    replyTo: "to@be.defined"
+            )
             discordSend(
-                    description: "**Build:**  #$env.BUILD_NUMBER\n**Status:**  Unstable\n",
-                    footer: 'Jenkins - the builder',
+                    description: "Build #$env.BUILD_NUMBER finished unstable",
                     image: '',
                     link: "$env.BUILD_URL",
                     successful: true,
+                    result: "UNSTABLE",
                     thumbnail: 'https://wiki.jenkins-ci.org/download/attachments/2916393/headshot.png',
                     title: "$env.JOB_NAME",
                     webhookURL: "${DISCORD_WEBHOOK}"
             )
         }
         failure {
+            emailext(
+                    subject: "RED: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                    body: '${JELLY_SCRIPT,template="html"}',
+                    recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+//                    to: "to@be.defined",
+//                    replyTo: "to@be.defined"
+            )
             discordSend(
-                    description: "**Build:**  #$env.BUILD_NUMBER\n**Status:**  Failed\n",
-                    footer: 'Jenkins - the builder',
+                    description: "Build #$env.BUILD_NUMBER failed!",
                     image: '',
                     link: "$env.BUILD_URL",
                     successful: false,
