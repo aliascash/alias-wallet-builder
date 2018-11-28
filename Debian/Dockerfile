@@ -41,6 +41,9 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
  && dpkg-reconfigure locales \
  && /usr/sbin/update-locale LANG=en_US.UTF-8
 
+# Add Debian testing and install gcc7 build toolchain from there
+# This is done as a separate step as otherwise some of the other
+# packages will bee too new (i. e. qt5)
 COPY Debian/testing.list /etc/apt/sources.list.d/
 RUN apt-get update -y
 RUN apt-get install -y --no-install-recommends \

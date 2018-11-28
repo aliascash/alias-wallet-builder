@@ -27,5 +27,8 @@ necessary to setup the required build environment again and again.
 
 ## How it is build
 ```
-docker build -t spectreproject/spectre-builder:latest .
+docker build \
+    -f <distribution>/Dockerfile \
+    -t spectreproject/spectre-builder-<distribution>:latest \
+    .
 ```

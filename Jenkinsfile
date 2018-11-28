@@ -12,7 +12,7 @@ pipeline {
         // In case another branch beside master or develop should be deployed, enter it here
         BRANCH_TO_DEPLOY = 'xyz'
         // This version will be used for the image tags if the branch is merged to master
-        BUILDER_IMAGE_VERSION = '1.3'
+        BUILDER_IMAGE_VERSION = '1.4'
         DISCORD_WEBHOOK = credentials('991ce248-5da9-4068-9aea-8a6c2c388a19')
     }
     stages {
@@ -38,6 +38,7 @@ pipeline {
                     anyOf { branch 'develop'; branch 'master'; branch "${BRANCH_TO_DEPLOY}" }
                 }
             }
+            //noinspection GroovyAssignabilityCheck
             parallel {
                 stage('Debian') {
                     agent {
@@ -130,6 +131,7 @@ pipeline {
             when {
                 anyOf { branch 'develop'; branch "${BRANCH_TO_DEPLOY}" }
             }
+            //noinspection GroovyAssignabilityCheck
             parallel {
                 stage('Debian') {
                     agent {
@@ -227,6 +229,7 @@ pipeline {
             when {
                 branch 'master'
             }
+            //noinspection GroovyAssignabilityCheck
             parallel {
                 stage('Debian') {
                     agent {
