@@ -47,8 +47,8 @@ RUN yum install -y \
  && make \
  && make install
 
-COPY openssl.sh /etc/profile.d/
-COPY openssl-1.1.1.conf /etc/ld.so.conf.d/
+COPY CentOS/openssl.sh /etc/profile.d/
+COPY CentOS/openssl-1.1.1.conf /etc/ld.so.conf.d/
 
 RUN ldconfig -v \
  && chmod +x /etc/profile.d/openssl.sh \
