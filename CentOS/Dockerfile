@@ -17,6 +17,7 @@ RUN yum install -y \
     autoconf \
     automake \
     boost-devel \
+    file \
     git \
     less \
     libcap-devel \
@@ -27,13 +28,13 @@ RUN yum install -y \
     make \
     mc \
     openssh-clients \
-    openssl-devel \
     patch \
     pkg-config \
     qt5 \
     qt5-devel \
     qt5-qtwebengine-devel \
-    wget
+    wget \
+    which
 
 RUN yum install -y \
     libtool \
@@ -43,7 +44,7 @@ RUN yum install -y \
  && wget https://www.openssl.org/source/openssl-1.1.1.tar.gz \
  && tar -zxvf openssl-1.1.1.tar.gz \
  && cd openssl-1.1.1 \
- && ./config --prefix=/usr/local/ssl --openssldir=/usr/local/ssl shared zlib\
+ && ./config --prefix=/usr/local/ssl --openssldir=/usr/local/ssl -Wl,-rpath=/usr/local/ssl/lib shared zlib\
  && make \
  && make install
 
@@ -53,3 +54,5 @@ COPY CentOS/openssl-1.1.1.conf /etc/ld.so.conf.d/
 RUN ldconfig -v \
  && chmod +x /etc/profile.d/openssl.sh \
  && source /etc/profile.d/openssl.sh
+
+ENV PATH="/usr/local/ssl/bin:${PATH}"
