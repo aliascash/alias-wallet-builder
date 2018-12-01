@@ -11,12 +11,7 @@ RUN apt-get update -y \
  && apt-get upgrade -y
 
 RUN apt-get install -y --no-install-recommends \
-    autoconf \
-    autogen \
-    automake \
-    build-essential \
     ca-certificates \
-    g++ \
     git \
     less \
     libboost1.67-all-dev \
@@ -45,6 +40,17 @@ RUN apt-get install -y --no-install-recommends \
 # So install compile dependencies
 RUN apt-get install -y --no-install-recommends \
     libncurses5-dev
+
+# Add Debian testing and install gcc7 build toolchain from there
+# This is done as a separate step as otherwise some of the other
+# packages will bee too new (i. e. qt5)
+COPY Debian/testing.list /etc/apt/sources.list.d/
+RUN apt-get update -y
+RUN apt-get install -y --no-install-recommends \
+    autoconf \
+    automake \
+    build-essential \
+    g++-7
 
 # Download 'dialog' sources, compile and install
 RUN cd /tmp/ \
