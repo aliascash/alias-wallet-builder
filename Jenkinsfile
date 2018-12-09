@@ -1,7 +1,9 @@
 #!groovy
 
 pipeline {
-    agent any
+    agent {
+        label "docker"
+    }
     options {
         timestamps()
         timeout(time: 2, unit: 'HOURS')
@@ -42,9 +44,6 @@ pipeline {
             //noinspection GroovyAssignabilityCheck
             parallel {
                 stage('Debian') {
-                    agent {
-                        label "docker"
-                    }
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
@@ -137,9 +136,6 @@ pipeline {
             //noinspection GroovyAssignabilityCheck
             parallel {
                 stage('Debian') {
-                    agent {
-                        label "docker"
-                    }
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
@@ -237,9 +233,6 @@ pipeline {
             //noinspection GroovyAssignabilityCheck
             parallel {
                 stage('Debian') {
-                    agent {
-                        label "docker"
-                    }
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
