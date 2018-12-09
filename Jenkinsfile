@@ -10,7 +10,7 @@ pipeline {
     }
     environment {
         // In case another branch beside master or develop should be deployed, enter it here
-        BRANCH_TO_DEPLOY = 'xyz'
+        BRANCH_TO_DEPLOY = 'qt5.11'
         // This version will be used for the image tags if the branch is merged to master
         BUILDER_IMAGE_VERSION = '1.4'
         BUILDER_IMAGE_DEVELOP_VERSION = 'qt5.11'
@@ -143,8 +143,8 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Debian/Dockerfile --rm -t spectreproject/spectre-builder-debian:latest ."
-                                sh "docker push spectreproject/spectre-builder-debian:latest"
+                                sh "docker build -f Debian/Dockerfile --rm -t spectreproject/spectre-builder-debian:${BUILDER_IMAGE_DEVELOP_VERSION} ."
+                                sh "docker push spectreproject/spectre-builder-debian:${BUILDER_IMAGE_DEVELOP_VERSION}"
                             }
                         }
                     }
@@ -154,6 +154,7 @@ pipeline {
                         }
                     }
                 }
+                /*
                 stage('CentOS') {
                     agent {
                         label "docker"
@@ -161,8 +162,8 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f CentOS/Dockerfile --rm -t spectreproject/spectre-builder-centos:latest ."
-                                sh "docker push spectreproject/spectre-builder-centos:latest"
+                                sh "docker build -f CentOS/Dockerfile --rm -t spectreproject/spectre-builder-centos:${BUILDER_IMAGE_DEVELOP_VERSION} ."
+                                sh "docker push spectreproject/spectre-builder-centos:${BUILDER_IMAGE_DEVELOP_VERSION}"
                             }
                         }
                     }
@@ -179,8 +180,8 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Fedora/Dockerfile --rm -t spectreproject/spectre-builder-fedora:latest ."
-                                sh "docker push spectreproject/spectre-builder-fedora:latest"
+                                sh "docker build -f Fedora/Dockerfile --rm -t spectreproject/spectre-builder-fedora:${BUILDER_IMAGE_DEVELOP_VERSION} ."
+                                sh "docker push spectreproject/spectre-builder-fedora:${BUILDER_IMAGE_DEVELOP_VERSION}"
                             }
                         }
                     }
@@ -197,8 +198,8 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f RaspberryPi/Dockerfile --rm -t spectreproject/spectre-builder-raspi:latest ."
-                                sh "docker push spectreproject/spectre-builder-raspi:latest"
+                                sh "docker build -f RaspberryPi/Dockerfile --rm -t spectreproject/spectre-builder-raspi:${BUILDER_IMAGE_DEVELOP_VERSION} ."
+                                sh "docker push spectreproject/spectre-builder-raspi:${BUILDER_IMAGE_DEVELOP_VERSION}"
                             }
                         }
                     }
@@ -215,8 +216,8 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Ubuntu/Dockerfile --rm -t spectreproject/spectre-builder-ubuntu:latest ."
-                                sh "docker push spectreproject/spectre-builder-ubuntu:latest"
+                                sh "docker build -f Ubuntu/Dockerfile --rm -t spectreproject/spectre-builder-ubuntu:${BUILDER_IMAGE_DEVELOP_VERSION} ."
+                                sh "docker push spectreproject/spectre-builder-ubuntu:${BUILDER_IMAGE_DEVELOP_VERSION}"
                             }
                         }
                     }
@@ -226,6 +227,7 @@ pipeline {
                         }
                     }
                 }
+                */
             }
         }
         stage('Release and upload image') {
