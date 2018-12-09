@@ -13,6 +13,7 @@ pipeline {
         BRANCH_TO_DEPLOY = 'xyz'
         // This version will be used for the image tags if the branch is merged to master
         BUILDER_IMAGE_VERSION = '1.4'
+        BUILDER_IMAGE_DEVELOP_VERSION = 'qt5.11'
         DISCORD_WEBHOOK = credentials('991ce248-5da9-4068-9aea-8a6c2c388a19')
     }
     stages {
@@ -47,7 +48,7 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Debian/Dockerfile --rm -t spectreproject/spectre-builder-debian:latest ."
+                                sh "docker build -f Debian/Dockerfile --rm -t spectreproject/spectre-builder-debian:${BUILDER_IMAGE_DEVELOP_VERSION} ."
                             }
                         }
                     }
@@ -57,6 +58,7 @@ pipeline {
                         }
                     }
                 }
+                /*
                 stage('CentOS') {
                     agent {
                         label "docker"
@@ -64,7 +66,7 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f CentOS/Dockerfile --rm -t spectreproject/spectre-builder-centos:latest ."
+                                sh "docker build -f CentOS/Dockerfile --rm -t spectreproject/spectre-builder-centos:${BUILDER_IMAGE_DEVELOP_VERSION} ."
                             }
                         }
                     }
@@ -81,7 +83,7 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Fedora/Dockerfile --rm -t spectreproject/spectre-builder-fedora:latest ."
+                                sh "docker build -f Fedora/Dockerfile --rm -t spectreproject/spectre-builder-fedora:${BUILDER_IMAGE_DEVELOP_VERSION} ."
                             }
                         }
                     }
@@ -98,7 +100,7 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f RaspberryPi/Dockerfile --rm -t spectreproject/spectre-builder-raspi:latest ."
+                                sh "docker build -f RaspberryPi/Dockerfile --rm -t spectreproject/spectre-builder-raspi:${BUILDER_IMAGE_DEVELOP_VERSION} ."
                             }
                         }
                     }
@@ -115,7 +117,7 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Ubuntu/Dockerfile --rm -t spectreproject/spectre-builder-ubuntu:latest ."
+                                sh "docker build -f Ubuntu/Dockerfile --rm -t spectreproject/spectre-builder-ubuntu:${BUILDER_IMAGE_DEVELOP_VERSION} ."
                             }
                         }
                     }
@@ -125,6 +127,7 @@ pipeline {
                         }
                     }
                 }
+                */
             }
         }
         stage('Build and upload image') {

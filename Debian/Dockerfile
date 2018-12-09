@@ -16,7 +16,7 @@ RUN apt-get install -y --no-install-recommends \
     automake \
     build-essential \
     ca-certificates \
-    g++-7 \
+    g++-8 \
     git \
     less \
     libboost1.67-all-dev \
@@ -30,8 +30,6 @@ RUN apt-get install -y --no-install-recommends \
     locales \
     make \
     mc \
-    mingw-w64 \
-    mingw-w64-x86-64-dev \
     openssh-client \
     pkg-config \
     qt5-default \
@@ -45,3 +43,9 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
  && locale-gen en_US.UTF-8 \
  && dpkg-reconfigure locales \
  && /usr/sbin/update-locale LANG=en_US.UTF-8
+
+# Cleanup system
+RUN apt-get update -y \
+ && apt-get autoclean -y \
+ && apt-get clean -y \
+ && apt-get autoremove -y
