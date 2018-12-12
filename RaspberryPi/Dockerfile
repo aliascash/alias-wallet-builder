@@ -44,6 +44,12 @@ RUN apt-get install -y --no-install-recommends \
 RUN apt-get install -y --no-install-recommends \
     libncurses5-dev
 
+# Cleanup system
+RUN apt-get update -y \
+ && apt-get autoclean -y \
+ && apt-get clean -y \
+ && apt-get autoremove -y
+
 # Download 'dialog' sources, compile and install
 RUN cd /tmp/ \
  && wget https://invisible-island.net/datafiles/release/dialog.tar.gz \
@@ -56,9 +62,3 @@ RUN cd /tmp/ \
  && mkdir /newDialog \
  && make install DESTDIR=/newDialog/ \
  && rm -rf /tmp/dialog.tar.gz /dialog
-
-# Cleanup system
-RUN apt-get update -y \
- && apt-get autoclean -y \
- && apt-get clean -y \
- && apt-get autoremove -y
