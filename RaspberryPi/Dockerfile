@@ -3,7 +3,8 @@ MAINTAINER HLXEasy <hlxeasy@gmail.com>
 
 COPY RaspberryPi/qemu-arm-static /usr/bin
 
-ENV WORK_DIR=/data/work
+ENV WORK_DIR=/data/work \
+    DEBIAN_FRONTEND=noninteractive
 
 COPY Debian/stretch-backports.list /etc/apt/sources.list.d/
 COPY Debian/testing.list /etc/apt/sources.list.d/
