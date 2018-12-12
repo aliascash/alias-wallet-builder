@@ -6,12 +6,17 @@ COPY RaspberryPi/qemu-arm-static /usr/bin
 ENV WORK_DIR=/data/work
 
 COPY Debian/stretch-backports.list /etc/apt/sources.list.d/
+COPY Debian/testing.list /etc/apt/sources.list.d/
 
 RUN apt-get update -y \
  && apt-get upgrade -y
 
 RUN apt-get install -y --no-install-recommends \
+    autoconf \
+    automake \
+    build-essential \
     ca-certificates \
+    g++-8 \
     git \
     less \
     libboost1.67-all-dev \
@@ -25,8 +30,6 @@ RUN apt-get install -y --no-install-recommends \
     locales \
     make \
     mc \
-    mingw-w64 \
-    mingw-w64-x86-64-dev \
     openssh-client \
     pkg-config \
     qt5-default \
@@ -41,17 +44,6 @@ RUN apt-get install -y --no-install-recommends \
 RUN apt-get install -y --no-install-recommends \
     libncurses5-dev
 
-# Add Debian testing and install gcc7 build toolchain from there
-# This is done as a separate step as otherwise some of the other
-# packages will bee too new (i. e. qt5)
-COPY Debian/testing.list /etc/apt/sources.list.d/
-RUN apt-get update -y
-RUN apt-get install -y --no-install-recommends \
-    autoconf \
-    automake \
-    build-essential \
-    g++-7
-
 # Download 'dialog' sources, compile and install
 RUN cd /tmp/ \
  && wget https://invisible-island.net/datafiles/release/dialog.tar.gz \
@@ -64,3 +56,9 @@ RUN cd /tmp/ \
  && mkdir /newDialog \
  && make install DESTDIR=/newDialog/ \
  && rm -rf /tmp/dialog.tar.gz /dialog
+
+# Cleanup system
+RUN apt-get update -y \
+ && apt-get autoclean -y \
+ && apt-get clean -y \
+ && apt-get autoremove -y

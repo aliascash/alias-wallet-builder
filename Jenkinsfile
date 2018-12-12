@@ -92,6 +92,7 @@ pipeline {
                         }
                     }
                 }
+                */
                 stage('Raspberry Pi') {
                     agent {
                         label "docker"
@@ -109,6 +110,7 @@ pipeline {
                         }
                     }
                 }
+                /*
                 stage('Ubuntu') {
                     agent {
                         label "docker"
@@ -187,6 +189,7 @@ pipeline {
                         }
                     }
                 }
+                */
                 stage('Raspberry Pi') {
                     agent {
                         label "docker"
@@ -205,6 +208,7 @@ pipeline {
                         }
                     }
                 }
+                /*
                 stage('Ubuntu') {
                     agent {
                         label "docker"
