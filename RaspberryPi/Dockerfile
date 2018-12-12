@@ -3,21 +3,15 @@ MAINTAINER HLXEasy <hlxeasy@gmail.com>
 
 COPY RaspberryPi/qemu-arm-static /usr/bin
 
-ENV WORK_DIR=/data/work \
-    DEBIAN_FRONTEND=noninteractive
+ENV WORK_DIR=/data/work
 
 COPY Debian/stretch-backports.list /etc/apt/sources.list.d/
-COPY Debian/testing.list /etc/apt/sources.list.d/
 
 RUN apt-get update -y \
  && apt-get upgrade -y
 
 RUN apt-get install -y --no-install-recommends \
-    autoconf \
-    automake \
-    build-essential \
     ca-certificates \
-    g++-8 \
     git \
     less \
     libboost1.67-all-dev \
@@ -31,12 +25,10 @@ RUN apt-get install -y --no-install-recommends \
     locales \
     make \
     mc \
+    mingw-w64 \
+    mingw-w64-x86-64-dev \
     openssh-client \
     pkg-config \
-    qt5-default \
-    qtbase5-dev \
-    qttools5-dev-tools \
-    qtwebengine5-dev \
     wget
 
 # Latest and greatest version of 'dialog' must be compiled explicitly
@@ -45,11 +37,20 @@ RUN apt-get install -y --no-install-recommends \
 RUN apt-get install -y --no-install-recommends \
     libncurses5-dev
 
-# Cleanup system
-RUN apt-get update -y \
- && apt-get autoclean -y \
- && apt-get clean -y \
- && apt-get autoremove -y
+# Add Debian testing and install gcc7 build toolchain from there
+# This is done as a separate step as otherwise some of the other
+# packages will bee too new (i. e. qt5)
+COPY Debian/testing.list /etc/apt/sources.list.d/
+RUN apt-get update -y
+RUN apt-get install -y --no-install-recommends \
+    autoconf \
+    automake \
+    build-essential \
+    g++-7 \
+    qt5-default \
+    qtbase5-dev \
+    qttools5-dev-tools \
+    qtwebengine5-dev
 
 # Download 'dialog' sources, compile and install
 RUN cd /tmp/ \
