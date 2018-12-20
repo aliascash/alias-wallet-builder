@@ -14,7 +14,7 @@ pipeline {
         DISCORD_WEBHOOK = credentials('991ce248-5da9-4068-9aea-8a6c2c388a19')
     }
     parameters {
-        choice choices: ['CentOS', 'Debian', 'Fedora', 'RaspberryPi', 'Ubuntu'], description: 'Which image do you want to tag?', name: 'IMAGE_TO_TAG'
+        choice choices: ['centos', 'debian', 'fedora', 'raspi', 'ubuntu'], description: 'Which image do you want to tag?', name: 'IMAGE_TO_TAG'
         string defaultValue: 'latest', description: 'Which existing version to you want to tag?', name: 'IMAGE_VERSION_TO_TAG', trim: true
         string defaultValue: '', description: 'Which tag should be set?', name: 'TAG_TO_SET', trim: true
     }
@@ -39,11 +39,11 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                        sh (
+                        sh(
                                 script: '''
-                                    docker pull spectreproject/spectre-${IMAGE_TO_TAG}:${IMAGE_VERSION_TO_TAG}
-                                    docker tag spectreproject/spectre-${IMAGE_TO_TAG}:${IMAGE_VERSION_TO_TAG} spectreproject/spectre-${IMAGE_TO_TAG}:${TAG_TO_SET}
-                                    docker push spectreproject/spectre-${IMAGE_TO_TAG}:${TAG_TO_SET}
+                                    docker pull spectreproject/spectre-builder-${IMAGE_TO_TAG}:${IMAGE_VERSION_TO_TAG}
+                                    docker tag  spectreproject/spectre-builder-${IMAGE_TO_TAG}:${IMAGE_VERSION_TO_TAG} spectreproject/spectre-builder-${IMAGE_TO_TAG}:${TAG_TO_SET}
+                                    docker push spectreproject/spectre-builder-${IMAGE_TO_TAG}:${TAG_TO_SET}
                                 '''
                         )
                     }
@@ -52,6 +52,9 @@ pipeline {
         }
     }
     post {
+        always {
+            sh "docker system prune --all --force"
+        }
         success {
             script {
                 if (!hudson.model.Result.SUCCESS.equals(currentBuild.getPreviousBuild()?.getResult())) {
