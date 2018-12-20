@@ -226,11 +226,9 @@ pipeline {
                 branch 'master'
             }
             //noinspection GroovyAssignabilityCheck
-            stage('Info') {
-                steps {
-                    script {
-                        sh "echo 'No build steps on master branch performed, use tagImage-Job perform image releases'"
-                    }
+            steps {
+                script {
+                    sh "echo 'No build steps on master branch performed, use tagImage-Job perform image releases'"
                 }
             }
         }
