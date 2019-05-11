@@ -30,8 +30,8 @@ RUN yum install -y \
     openssh-clients \
     patch \
     pkg-config \
-    qt5 \
-    qt5-devel \
+    qt5-qtbase \
+    qt5-qtbase-devel \
     qt5-qtwebengine-devel \
     wget \
     which
