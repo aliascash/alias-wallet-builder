@@ -40,14 +40,31 @@ pipeline {
             }
             //noinspection GroovyAssignabilityCheck
             parallel {
-                stage('Debian') {
+                stage('Debian Stretch') {
                     agent {
                         label "docker"
                     }
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Debian/Dockerfile --rm -t spectreproject/spectre-builder-debian:latest ."
+                                sh "docker build -f Debian/Dockerfile_Stretch --rm -t spectreproject/spectre-builder-debian-stretch:latest ."
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            sh "docker system prune --all --force"
+                        }
+                    }
+                }
+                stage('Debian Buster') {
+                    agent {
+                        label "docker"
+                    }
+                    steps {
+                        script {
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f Debian/Dockerfile_Buster --rm -t spectreproject/spectre-builder-debian-buster:latest ."
                             }
                         }
                     }
@@ -91,11 +108,25 @@ pipeline {
                         }
                     }
                 }
-                stage('Raspberry Pi') {
+                stage('Raspberry Pi Stretch') {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f RaspberryPi/Dockerfile --rm -t spectreproject/spectre-builder-raspi:latest ."
+                                sh "docker build -f RaspberryPi/Dockerfile_Stretch --rm -t spectreproject/spectre-builder-raspi-stretch:latest ."
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            sh "docker system prune --all --force"
+                        }
+                    }
+                }
+                stage('Raspberry Pi Buster') {
+                    steps {
+                        script {
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f RaspberryPi/Dockerfile_Buster --rm -t spectreproject/spectre-builder-raspi-buster:latest ."
                             }
                         }
                     }
@@ -130,15 +161,33 @@ pipeline {
             }
             //noinspection GroovyAssignabilityCheck
             parallel {
-                stage('Debian') {
+                stage('Debian Stretch') {
                     agent {
                         label "docker"
                     }
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Debian/Dockerfile --rm -t spectreproject/spectre-builder-debian:latest ."
-                                sh "docker push spectreproject/spectre-builder-debian:latest"
+                                sh "docker build -f Debian/Dockerfile_Stretch --rm -t spectreproject/spectre-builder-debian-stretch:latest ."
+                                sh "docker push spectreproject/spectre-builder-debian-stretch:latest"
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            sh "docker system prune --all --force"
+                        }
+                    }
+                }
+                stage('Debian Buster') {
+                    agent {
+                        label "docker"
+                    }
+                    steps {
+                        script {
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f Debian/Dockerfile_Buster --rm -t spectreproject/spectre-builder-debian-buster:latest ."
+                                sh "docker push spectreproject/spectre-builder-debian-buster:latest"
                             }
                         }
                     }
@@ -184,12 +233,27 @@ pipeline {
                         }
                     }
                 }
-                stage('Raspberry Pi') {
+                stage('Raspberry Pi Stretch') {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f RaspberryPi/Dockerfile --rm -t spectreproject/spectre-builder-raspi:latest ."
-                                sh "docker push spectreproject/spectre-builder-raspi:latest"
+                                sh "docker build -f RaspberryPi/Dockerfile_Stretch --rm -t spectreproject/spectre-builder-raspi-stretch:latest ."
+                                sh "docker push spectreproject/spectre-builder-raspi-stretch:latest"
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            sh "docker system prune --all --force"
+                        }
+                    }
+                }
+                stage('Raspberry Pi Buster') {
+                    steps {
+                        script {
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f RaspberryPi/Dockerfile_Buster --rm -t spectreproject/spectre-builder-raspi-buster:latest ."
+                                sh "docker push spectreproject/spectre-builder-raspi-buster:latest"
                             }
                         }
                     }
