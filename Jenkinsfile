@@ -136,14 +136,31 @@ pipeline {
                         }
                     }
                 }
-                stage('Ubuntu') {
+                stage('Ubuntu 18.04') {
                     agent {
                         label "docker"
                     }
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Ubuntu/Dockerfile --rm -t spectreproject/spectre-builder-ubuntu:latest ."
+                                sh "docker build -f Ubuntu/Dockerfile_18_04 --rm -t spectreproject/spectre-builder-ubuntu-18-04:latest ."
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            sh "docker system prune --all --force"
+                        }
+                    }
+                }
+                stage('Ubuntu 19.04') {
+                    agent {
+                        label "docker"
+                    }
+                    steps {
+                        script {
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f Ubuntu/Dockerfile_19_04 --rm -t spectreproject/spectre-builder-ubuntu-19-04:latest ."
                             }
                         }
                     }
@@ -263,6 +280,24 @@ pipeline {
                         }
                     }
                 }
+                stage('Ubuntu 18.04') {
+                    agent {
+                        label "docker"
+                    }
+                    steps {
+                        script {
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f Ubuntu/Dockerfile_18_04 --rm -t spectreproject/spectre-builder-ubuntu-18-04:latest ."
+                                sh "docker push spectreproject/spectre-builder-ubuntu-18-04:latest"
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            sh "docker system prune --all --force"
+                        }
+                    }
+                }
                 stage('Ubuntu') {
                     agent {
                         label "docker"
@@ -270,8 +305,8 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Ubuntu/Dockerfile --rm -t spectreproject/spectre-builder-ubuntu:latest ."
-                                sh "docker push spectreproject/spectre-builder-ubuntu:latest"
+                                sh "docker build -f Ubuntu/Dockerfile_19_04 --rm -t spectreproject/spectre-builder-ubuntu-19-04:latest ."
+                                sh "docker push spectreproject/spectre-builder-ubuntu-19-04:latest"
                             }
                         }
                     }
