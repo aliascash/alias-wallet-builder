@@ -21,7 +21,7 @@ RUN apt-get install -y --no-install-recommends \
     libcap-dev \
     libevent-dev \
     libqt5quick5-dev \
-    libqt5quickwidgets5-dev \
+    libqt5quickwidgets5 \
     libqt5webchannel5-dev \
     libqt5websockets5-dev \
     libqt5webview5-dev \
