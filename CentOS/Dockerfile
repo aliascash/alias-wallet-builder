@@ -32,12 +32,9 @@ RUN yum install -y \
     pkg-config \
     qt5-qtbase \
     qt5-qtbase-devel \
-    qt5-qtquick-devel \
     qt5-qtquickcontrols \
     qt5-qtwebchannel-devel \
-    qt5-qtwebengine-devel \
     qt5-qtwebsockets-devel \
-    qt5-qtwebview-devel \
     wget \
     which
 

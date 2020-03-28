@@ -31,7 +31,6 @@ RUN yum install -y \
     pkg-config \
     qt5 \
     qt5-devel \
-    qt5-qtquick-devel \
     qt5-qtquickcontrols \
     qt5-qtwebchannel-devel \
     qt5-qtwebengine-devel \
