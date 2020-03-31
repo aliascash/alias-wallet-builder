@@ -156,6 +156,23 @@ pipeline {
                         }
                     }
                 }
+                stage('Ubuntu 19.10') {
+                    agent {
+                        label "docker"
+                    }
+                    steps {
+                        script {
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f Ubuntu/Dockerfile_19_10 --rm -t spectreproject/spectre-builder-ubuntu-19-10:latest ."
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            sh "docker system prune --all --force"
+                        }
+                    }
+                }
             }
         }
         stage('Build and upload image') {
