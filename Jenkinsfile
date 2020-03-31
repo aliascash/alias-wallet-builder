@@ -16,13 +16,13 @@ pipeline {
         DISCORD_WEBHOOK = credentials('991ce248-5da9-4068-9aea-8a6c2c388a19')
     }
     parameters {
-        booleanParam defaultValue: true, description: "Build Debian Stretch image", name: BUILD_DEBIAN_STRETCH
-        booleanParam defaultValue: true, description: "Build Debian Buster image", name: BUILD_DEBIAN_BUSTER
-        booleanParam defaultValue: true, description: "Build Fedora image", name: BUILD_FEDORA
-        booleanParam defaultValue: true, description: "Build Raspbian Buster image", name: BUILD_RASPBIAN_BUSTER
-        booleanParam defaultValue: true, description: "Build Ubuntu 18.04 image", name: BUILD_UBUNTU_18_04
-        booleanParam defaultValue: true, description: "Build Ubuntu 19.04 image", name: BUILD_UBUNTU_19_04
-        booleanParam defaultValue: true, description: "Build Ubuntu 19.10 image", name: BUILD_UBUNTU_19_10
+        booleanParam defaultValue: true, description: "Build Debian Stretch image", name: 'BUILD_DEBIAN_STRETCH'
+        booleanParam defaultValue: true, description: "Build Debian Buster image", name: 'BUILD_DEBIAN_BUSTER'
+        booleanParam defaultValue: true, description: "Build Fedora image", name: 'BUILD_FEDORA'
+        booleanParam defaultValue: true, description: "Build Raspbian Buster image", name: 'BUILD_RASPBIAN_BUSTER'
+        booleanParam defaultValue: true, description: "Build Ubuntu 18.04 image", name: 'BUILD_UBUNTU_18_04'
+        booleanParam defaultValue: true, description: "Build Ubuntu 19.04 image", name: 'BUILD_UBUNTU_19_04'
+        booleanParam defaultValue: true, description: "Build Ubuntu 19.10 image", name: 'BUILD_UBUNTU_19_10'
     }
     stages {
         stage('Notification') {
