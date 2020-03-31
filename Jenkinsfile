@@ -15,6 +15,15 @@ pipeline {
         BRANCH_TO_DEPLOY = 'xyz'
         DISCORD_WEBHOOK = credentials('991ce248-5da9-4068-9aea-8a6c2c388a19')
     }
+    parameters {
+        booleanParam defaultValue: true, description: "Build Debian Stretch image", name: BUILD_DEBIAN_STRETCH
+        booleanParam defaultValue: true, description: "Build Debian Buster image", name: BUILD_DEBIAN_BUSTER
+        booleanParam defaultValue: true, description: "Build Fedora image", name: BUILD_FEDORA
+        booleanParam defaultValue: true, description: "Build Raspbian Buster image", name: BUILD_RASPBIAN_BUSTER
+        booleanParam defaultValue: true, description: "Build Ubuntu 18.04 image", name: BUILD_UBUNTU_18_04
+        booleanParam defaultValue: true, description: "Build Ubuntu 19.04 image", name: BUILD_UBUNTU_19_04
+        booleanParam defaultValue: true, description: "Build Ubuntu 19.10 image", name: BUILD_UBUNTU_19_10
+    }
     stages {
         stage('Notification') {
             steps {
@@ -165,6 +174,11 @@ pipeline {
             //noinspection GroovyAssignabilityCheck
             parallel {
                 stage('Debian Stretch') {
+                    when {
+                        expression {
+                            env.BUILD_DEBIAN_STRETCH == 'true'
+                        }
+                    }
                     agent {
                         label "docker"
                     }
@@ -183,6 +197,11 @@ pipeline {
                     }
                 }
                 stage('Debian Buster') {
+                    when {
+                        expression {
+                            env.BUILD_DEBIAN_BUSTER == 'true'
+                        }
+                    }
                     agent {
                         label "docker"
                     }
@@ -201,6 +220,11 @@ pipeline {
                     }
                 }
                 stage('Fedora') {
+                    when {
+                        expression {
+                            env.BUILD_FEDORA == 'true'
+                        }
+                    }
                     agent {
                         label "docker"
                     }
@@ -219,6 +243,11 @@ pipeline {
                     }
                 }
                 stage('Raspberry Pi Buster') {
+                    when {
+                        expression {
+                            env.BUILD_RASPBIAN_BUSTER == 'true'
+                        }
+                    }
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
@@ -234,6 +263,11 @@ pipeline {
                     }
                 }
                 stage('Ubuntu 18.04') {
+                    when {
+                        expression {
+                            env.BUILD_UBUNTU_18_04 == 'true'
+                        }
+                    }
                     agent {
                         label "docker"
                     }
@@ -252,6 +286,11 @@ pipeline {
                     }
                 }
                 stage('Ubuntu 19.04') {
+                    when {
+                        expression {
+                            env.BUILD_UBUNTU_19_04 == 'true'
+                        }
+                    }
                     agent {
                         label "docker"
                     }
@@ -270,6 +309,11 @@ pipeline {
                     }
                 }
                 stage('Ubuntu 19.10') {
+                    when {
+                        expression {
+                            env.BUILD_UBUNTU_19_10 == 'true'
+                        }
+                    }
                     agent {
                         label "docker"
                     }
