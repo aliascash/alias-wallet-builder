@@ -108,6 +108,7 @@ pipeline {
                         }
                     }
                 }
+                /*
                 stage('Raspberry Pi Stretch') {
                     steps {
                         script {
@@ -122,6 +123,7 @@ pipeline {
                         }
                     }
                 }
+                */
                 stage('Raspberry Pi Buster') {
                     steps {
                         script {
@@ -250,6 +252,7 @@ pipeline {
                         }
                     }
                 }
+                /*
                 stage('Raspberry Pi Stretch') {
                     steps {
                         script {
@@ -265,6 +268,7 @@ pipeline {
                         }
                     }
                 }
+                */
                 stage('Raspberry Pi Buster') {
                     steps {
                         script {
