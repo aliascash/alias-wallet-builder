@@ -74,23 +74,6 @@ pipeline {
                         }
                     }
                 }
-                stage('CentOS') {
-                    agent {
-                        label "docker"
-                    }
-                    steps {
-                        script {
-                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f CentOS/Dockerfile --rm -t spectreproject/spectre-builder-centos:latest ."
-                            }
-                        }
-                    }
-                    post {
-                        always {
-                            sh "docker system prune --all --force"
-                        }
-                    }
-                }
                 stage('Fedora') {
                     agent {
                         label "docker"
@@ -217,26 +200,6 @@ pipeline {
                         }
                     }
                 }
-                /*
-                stage('CentOS') {
-                    agent {
-                        label "docker"
-                    }
-                    steps {
-                        script {
-                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f CentOS/Dockerfile --rm -t spectreproject/spectre-builder-centos:latest ."
-                                sh "docker push spectreproject/spectre-builder-centos:latest"
-                            }
-                        }
-                    }
-                    post {
-                        always {
-                            sh "docker system prune --all --force"
-                        }
-                    }
-                }
-                */
                 stage('Fedora') {
                     agent {
                         label "docker"
@@ -261,24 +224,6 @@ pipeline {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
                                 sh "docker build -f RaspberryPi/Dockerfile_Buster --rm -t spectreproject/spectre-builder-raspi-buster:latest ."
                                 sh "docker push spectreproject/spectre-builder-raspi-buster:latest"
-                            }
-                        }
-                    }
-                    post {
-                        always {
-                            sh "docker system prune --all --force"
-                        }
-                    }
-                }
-                stage('Ubuntu 18.04') {
-                    agent {
-                        label "docker"
-                    }
-                    steps {
-                        script {
-                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Ubuntu/Dockerfile_18_04 --rm -t spectreproject/spectre-builder-ubuntu-18-04:latest ."
-                                sh "docker push spectreproject/spectre-builder-ubuntu-18-04:latest"
                             }
                         }
                     }
