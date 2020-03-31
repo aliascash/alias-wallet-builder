@@ -47,7 +47,7 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Debian/Dockerfile_Stretch --rm -t spectreproject/spectre-builder-debian-stretch:latest ."
+                                sh "docker build -f Debian/Dockerfile_Stretch_update --rm -t spectreproject/spectre-builder-debian-stretch:latest ."
                             }
                         }
                     }
@@ -112,7 +112,7 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f RaspberryPi/Dockerfile_Stretch --rm -t spectreproject/spectre-builder-raspi-stretch:latest ."
+                                sh "docker build -f RaspberryPi/Dockerfile_Stretch_update --rm -t spectreproject/spectre-builder-raspi-stretch:latest ."
                             }
                         }
                     }
@@ -185,7 +185,7 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Debian/Dockerfile_Stretch --rm -t spectreproject/spectre-builder-debian-stretch:latest ."
+                                sh "docker build -f Debian/Dockerfile_Stretch_update --rm -t spectreproject/spectre-builder-debian-stretch:latest ."
                                 sh "docker push spectreproject/spectre-builder-debian-stretch:latest"
                             }
                         }
@@ -254,7 +254,7 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f RaspberryPi/Dockerfile_Stretch --rm -t spectreproject/spectre-builder-raspi-stretch:latest ."
+                                sh "docker build -f RaspberryPi/Dockerfile_Stretch_update --rm -t spectreproject/spectre-builder-raspi-stretch:latest ."
                                 sh "docker push spectreproject/spectre-builder-raspi-stretch:latest"
                             }
                         }
