@@ -31,7 +31,7 @@ RUN yum install -y \
     pkg-config \
     qt5 \
     qt5-devel \
-    qt5-base-devel \
+    qt5-qtbase-devel \
     qt5-qtnetworkauth-devel \
     qt5-qtquickcontrols \
     qt5-qtwebchannel-devel \
