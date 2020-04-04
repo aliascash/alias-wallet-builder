@@ -1,8 +1,12 @@
 FROM spectreproject/spectre-builder-debian-stretch:1.6
 MAINTAINER HLXEasy <hlxeasy@gmail.com>
 
-RUN apt-get install -y \
+RUN apt-get install -y --no-install-recommends \
+    libqt5network5 \
     libqt5quick5 \
     libqt5quickwidgets5 \
+    libqt5webchannel5-dev \
     libqt5websockets5-dev \
-    libqt5webview5-dev
+    libqt5webview5-dev \
+    libqt5widgets5 \
+ && apt-get clean
