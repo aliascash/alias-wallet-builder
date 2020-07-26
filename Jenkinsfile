@@ -51,7 +51,7 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Debian/Dockerfile --rm -t spectreproject/spectre-builder-debian:latest ."
+                                sh "docker build -f Debian/Dockerfile --rm -t aliascash/alias-builder-debian:latest ."
                             }
                         }
                     }
@@ -68,7 +68,7 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f CentOS/Dockerfile --rm -t spectreproject/spectre-builder-centos:latest ."
+                                sh "docker build -f CentOS/Dockerfile --rm -t aliascash/alias-builder-centos:latest ."
                             }
                         }
                     }
@@ -85,7 +85,7 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Fedora/Dockerfile --rm -t spectreproject/spectre-builder-fedora:latest ."
+                                sh "docker build -f Fedora/Dockerfile --rm -t aliascash/alias-builder-fedora:latest ."
                             }
                         }
                     }
@@ -99,7 +99,7 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f RaspberryPi/Dockerfile --rm -t spectreproject/spectre-builder-raspi:latest ."
+                                sh "docker build -f RaspberryPi/Dockerfile --rm -t aliascash/alias-builder-raspi:latest ."
                             }
                         }
                     }
@@ -116,7 +116,7 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Ubuntu/Dockerfile --rm -t spectreproject/spectre-builder-ubuntu:latest ."
+                                sh "docker build -f Ubuntu/Dockerfile --rm -t aliascash/alias-builder-ubuntu:latest ."
                             }
                         }
                     }
@@ -141,8 +141,8 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Debian/Dockerfile --rm -t spectreproject/spectre-builder-debian:latest ."
-                                sh "docker push spectreproject/spectre-builder-debian:latest"
+                                sh "docker build -f Debian/Dockerfile --rm -t aliascash/alias-builder-debian:latest ."
+                                sh "docker push aliascash/alias-builder-debian:latest"
                             }
                         }
                     }
@@ -159,8 +159,8 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f CentOS/Dockerfile --rm -t spectreproject/spectre-builder-centos:latest ."
-                                sh "docker push spectreproject/spectre-builder-centos:latest"
+                                sh "docker build -f CentOS/Dockerfile --rm -t aliascash/alias-builder-centos:latest ."
+                                sh "docker push aliascash/alias-builder-centos:latest"
                             }
                         }
                     }
@@ -177,8 +177,8 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Fedora/Dockerfile --rm -t spectreproject/spectre-builder-fedora:latest ."
-                                sh "docker push spectreproject/spectre-builder-fedora:latest"
+                                sh "docker build -f Fedora/Dockerfile --rm -t aliascash/alias-builder-fedora:latest ."
+                                sh "docker push aliascash/alias-builder-fedora:latest"
                             }
                         }
                     }
@@ -192,8 +192,8 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f RaspberryPi/Dockerfile --rm -t spectreproject/spectre-builder-raspi:latest ."
-                                sh "docker push spectreproject/spectre-builder-raspi:latest"
+                                sh "docker build -f RaspberryPi/Dockerfile --rm -t aliascash/alias-builder-raspi:latest ."
+                                sh "docker push aliascash/alias-builder-raspi:latest"
                             }
                         }
                     }
@@ -210,8 +210,8 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Ubuntu/Dockerfile --rm -t spectreproject/spectre-builder-ubuntu:latest ."
-                                sh "docker push spectreproject/spectre-builder-ubuntu:latest"
+                                sh "docker build -f Ubuntu/Dockerfile --rm -t aliascash/alias-builder-ubuntu:latest ."
+                                sh "docker push aliascash/alias-builder-ubuntu:latest"
                             }
                         }
                     }
