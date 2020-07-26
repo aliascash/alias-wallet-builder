@@ -1,3 +1,8 @@
+# SPDX-FileCopyrightText: © 2020 Alias Developers
+# SPDX-FileCopyrightText: © 2016 SpectreCoin Developers
+#
+# SPDX-License-Identifier: MIT
+
 FROM centos/devtoolset-7-toolchain-centos7:7
 MAINTAINER HLXEasy <hlxeasy@gmail.com>
 

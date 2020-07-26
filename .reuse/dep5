@@ -1,0 +1,9 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Alias
+Upstream-Contact: Alias Developers <info@alias.cash>
+Source: https://github.com/aliascash/alias
+
+Files: CentOS/openssl* Debian/*.list RaspberryPi/qemu-arm-static
+Copyright: 2020 Alias Developers
+Copyright: 2018 SpectreCoin Developers
+License: MIT
