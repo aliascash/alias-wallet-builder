@@ -45,9 +45,9 @@ pipeline {
                     withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
                         sh(
                                 script: '''
-                                    docker pull spectreproject/spectre-builder-${IMAGE_TO_TAG}:${IMAGE_VERSION_TO_TAG}
-                                    docker tag  spectreproject/spectre-builder-${IMAGE_TO_TAG}:${IMAGE_VERSION_TO_TAG} spectreproject/spectre-builder-${IMAGE_TO_TAG}:${TAG_TO_SET}
-                                    docker push spectreproject/spectre-builder-${IMAGE_TO_TAG}:${TAG_TO_SET}
+                                    docker pull aliascash/alias-builder-${IMAGE_TO_TAG}:${IMAGE_VERSION_TO_TAG}
+                                    docker tag  aliascash/alias-builder-${IMAGE_TO_TAG}:${IMAGE_VERSION_TO_TAG} aliascash/alias-builder-${IMAGE_TO_TAG}:${TAG_TO_SET}
+                                    docker push aliascash/alias-builder-${IMAGE_TO_TAG}:${TAG_TO_SET}
                                 '''
                         )
                     }
