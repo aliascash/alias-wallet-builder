@@ -24,7 +24,13 @@ RUN apt-get install -y --no-install-recommends \
     libboost1.65-all-dev \
     libcap-dev \
     libevent-dev \
+    libqt5network5 \
+    libqt5quick5 \
+    libqt5quickwidgets5 \
     libqt5webchannel5-dev \
+    libqt5websockets5-dev \
+    libqt5webview5-dev \
+    libqt5widgets5 \
     libseccomp-dev \
     libssl-dev \
     libtool \
@@ -32,15 +38,14 @@ RUN apt-get install -y --no-install-recommends \
     locales \
     make \
     mc \
-    mingw-w64 \
-    mingw-w64-x86-64-dev \
     openssh-client \
     pkg-config \
     qt5-default \
     qtbase5-dev \
     qttools5-dev-tools \
     qtwebengine5-dev \
-    wget
+    wget \
+ && apt-get clean
 
 # Set locale to UTF8
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
