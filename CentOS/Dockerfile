@@ -35,9 +35,11 @@ RUN yum install -y \
     openssh-clients \
     patch \
     pkg-config \
-    qt5 \
-    qt5-devel \
-    qt5-qtwebengine-devel \
+    qt5-qtbase \
+    qt5-qtbase-devel \
+    qt5-qtquickcontrols \
+    qt5-qtwebchannel-devel \
+    qt5-qtwebsockets-devel \
     wget \
     which
 
@@ -49,15 +51,16 @@ RUN yum install -y \
  && wget https://www.openssl.org/source/openssl-1.1.1.tar.gz \
  && tar -zxvf openssl-1.1.1.tar.gz \
  && cd openssl-1.1.1 \
- && ./config --prefix=/usr/local/ssl --openssldir=/usr/local/ssl -Wl,-rpath=/usr/local/ssl/lib shared zlib\
+ && ./config --prefix=/usr/local/openssl --openssldir=/usr/local/openssl shared zlib \
  && make \
  && make install
 
 COPY CentOS/openssl.sh /etc/profile.d/
 COPY CentOS/openssl-1.1.1.conf /etc/ld.so.conf.d/
 
-RUN ldconfig -v \
+RUN . /etc/profile \
+ && ldconfig -v \
  && chmod +x /etc/profile.d/openssl.sh \
  && source /etc/profile.d/openssl.sh
 
-ENV PATH="/usr/local/ssl/bin:${PATH}"
+ENV PATH="/usr/local/openssl/bin:${PATH}"
