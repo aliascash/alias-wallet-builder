@@ -60,7 +60,7 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Debian/Dockerfile_Stretch_update --rm -t aliascash/aliaswallet-builder-debian-stretch:latest ."
+                                sh "docker build -f Debian/Dockerfile_Stretch_update --rm -t aliascash/alias-wallet-builder-debian-stretch:latest ."
                             }
                         }
                     }
@@ -77,7 +77,7 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Debian/Dockerfile_Buster --rm -t aliascash/aliaswallet-builder-debian-buster:latest ."
+                                sh "docker build -f Debian/Dockerfile_Buster --rm -t aliascash/alias-wallet-builder-debian-buster:latest ."
                             }
                         }
                     }
@@ -108,7 +108,7 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f RaspberryPi/Dockerfile_Buster --rm -t aliascash/aliaswallet-builder-raspi-buster:latest ."
+                                sh "docker build -f RaspberryPi/Dockerfile_Buster --rm -t aliascash/alias-wallet-builder-raspi-buster:latest ."
                             }
                         }
                     }
@@ -125,7 +125,7 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Ubuntu/Dockerfile_18_04 --rm -t aliascash/aliaswallet-builder-ubuntu-18-04:latest ."
+                                sh "docker build -f Ubuntu/Dockerfile_18_04 --rm -t aliascash/alias-wallet-builder-ubuntu-18-04:latest ."
                             }
                         }
                     }
@@ -142,7 +142,7 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Ubuntu/Dockerfile_19_04 --rm -t aliascash/aliaswallet-builder-ubuntu-19-04:latest ."
+                                sh "docker build -f Ubuntu/Dockerfile_19_04 --rm -t aliascash/alias-wallet-builder-ubuntu-19-04:latest ."
                             }
                         }
                     }
@@ -159,7 +159,7 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Ubuntu/Dockerfile_19_10 --rm -t aliascash/aliaswallet-builder-ubuntu-19-10:latest ."
+                                sh "docker build -f Ubuntu/Dockerfile_19_10 --rm -t aliascash/alias-wallet-builder-ubuntu-19-10:latest ."
                             }
                         }
                     }
@@ -189,8 +189,8 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Debian/Dockerfile_Stretch_update --rm -t aliascash/aliaswallet-builder-debian-stretch:latest ."
-                                sh "docker push aliascash/aliaswallet-builder-debian-stretch:latest"
+                                sh "docker build -f Debian/Dockerfile_Stretch_update --rm -t aliascash/alias-wallet-builder-debian-stretch:latest ."
+                                sh "docker push aliascash/alias-wallet-builder-debian-stretch:latest"
                             }
                         }
                     }
@@ -212,8 +212,8 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Debian/Dockerfile_Buster --rm -t aliascash/aliaswallet-builder-debian-buster:latest ."
-                                sh "docker push aliascash/aliaswallet-builder-debian-buster:latest"
+                                sh "docker build -f Debian/Dockerfile_Buster --rm -t aliascash/alias-wallet-builder-debian-buster:latest ."
+                                sh "docker push aliascash/alias-wallet-builder-debian-buster:latest"
                             }
                         }
                     }
@@ -255,8 +255,8 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f RaspberryPi/Dockerfile_Buster --rm -t aliascash/aliaswallet-builder-raspi-buster:latest ."
-                                sh "docker push aliascash/aliaswallet-builder-raspi-buster:latest"
+                                sh "docker build -f RaspberryPi/Dockerfile_Buster --rm -t aliascash/alias-wallet-builder-raspi-buster:latest ."
+                                sh "docker push aliascash/alias-wallet-builder-raspi-buster:latest"
                             }
                         }
                     }
@@ -278,8 +278,8 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Ubuntu/Dockerfile_18_04 --rm -t aliascash/aliaswallet-builder-ubuntu-18-04:latest ."
-                                sh "docker push aliascash/aliaswallet-builder-ubuntu-18-04:latest"
+                                sh "docker build -f Ubuntu/Dockerfile_18_04 --rm -t aliascash/alias-wallet-builder-ubuntu-18-04:latest ."
+                                sh "docker push aliascash/alias-wallet-builder-ubuntu-18-04:latest"
                             }
                         }
                     }
@@ -301,8 +301,8 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Ubuntu/Dockerfile_19_04 --rm -t aliascash/aliaswallet-builder-ubuntu-19-04:latest ."
-                                sh "docker push aliascash/aliaswallet-builder-ubuntu-19-04:latest"
+                                sh "docker build -f Ubuntu/Dockerfile_19_04 --rm -t aliascash/alias-wallet-builder-ubuntu-19-04:latest ."
+                                sh "docker push aliascash/alias-wallet-builder-ubuntu-19-04:latest"
                             }
                         }
                     }
@@ -324,8 +324,8 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Ubuntu/Dockerfile_19_10 --rm -t aliascash/aliaswallet-builder-ubuntu-19-10:latest ."
-                                sh "docker push aliascash/aliaswallet-builder-ubuntu-19-10:latest"
+                                sh "docker build -f Ubuntu/Dockerfile_19_10 --rm -t aliascash/alias-wallet-builder-ubuntu-19-10:latest ."
+                                sh "docker push aliascash/alias-wallet-builder-ubuntu-19-10:latest"
                             }
                         }
                     }
