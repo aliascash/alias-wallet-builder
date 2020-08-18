@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-FROM fedora:29
+FROM fedora:32
 MAINTAINER HLXEasy <hlxeasy@gmail.com>
 
 ENV WORK_DIR=/data/work \
@@ -40,6 +40,7 @@ RUN yum install -y \
     qt5-qtdeclarative-devel \
     qt5-qtnetworkauth-devel \
     qt5-qtquickcontrols \
+    qt5-qtsvg-devel \
     qt5-qtwebchannel-devel \
     qt5-qtwebengine-devel \
     qt5-qtwebsockets-devel \
