@@ -14,6 +14,9 @@ USER 0
 RUN mkdir -p ${WORK_DIR}
 VOLUME ${WORK_DIR}
 
+RUN yum -y install \
+    epel-release
+
 RUN yum update -y \
  && yum install -y \
     autoconf \
@@ -38,10 +41,13 @@ RUN yum update -y \
     qt5-linguist \
     qt5-qtbase \
     qt5-qtbase-devel \
+    qt5-qtdeclarative-devel \
     qt5-qtquickcontrols \
     qt5-qtsvg-devel \
     qt5-qtwebchannel-devel \
+    qt5-qtwebkit-devel \
     qt5-qtwebsockets-devel \
+    qt5-qtwebview-devel \
     wget \
     which \
     zlib-devel \
