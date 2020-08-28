@@ -18,7 +18,7 @@ pipeline {
         DISCORD_WEBHOOK = credentials('991ce248-5da9-4068-9aea-8a6c2c388a19')
     }
     parameters {
-        choice choices: ['centos', 'debian-stretch', 'debian-buster', 'fedora', 'raspi-buster', 'ubuntu-18-04', 'ubuntu-20-04'], description: 'Which image do you want to tag?', name: 'IMAGE_TO_TAG'
+        choice choices: ['centos-8', 'debian-stretch', 'debian-buster', 'fedora', 'raspi-buster', 'ubuntu-18-04', 'ubuntu-20-04'], description: 'Which image do you want to tag?', name: 'IMAGE_TO_TAG'
         string defaultValue: 'latest', description: 'Which existing version to you want to tag?', name: 'IMAGE_VERSION_TO_TAG', trim: true
         string defaultValue: '', description: 'Which tag should be set?', name: 'TAG_TO_SET', trim: true
     }
@@ -45,9 +45,9 @@ pipeline {
                     withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
                         sh(
                                 script: '''
-                                    docker pull aliascash/alias-builder-${IMAGE_TO_TAG}:${IMAGE_VERSION_TO_TAG}
-                                    docker tag  aliascash/alias-builder-${IMAGE_TO_TAG}:${IMAGE_VERSION_TO_TAG} aliascash/alias-builder-${IMAGE_TO_TAG}:${TAG_TO_SET}
-                                    docker push aliascash/alias-builder-${IMAGE_TO_TAG}:${TAG_TO_SET}
+                                    docker pull aliascash/alias-wallet-builder-${IMAGE_TO_TAG}:${IMAGE_VERSION_TO_TAG}
+                                    docker tag  aliascash/alias-wallet-builder-${IMAGE_TO_TAG}:${IMAGE_VERSION_TO_TAG} aliascash/alias-wallet-builder-${IMAGE_TO_TAG}:${TAG_TO_SET}
+                                    docker push aliascash/alias-wallet-builder-${IMAGE_TO_TAG}:${TAG_TO_SET}
                                 '''
                         )
                     }

@@ -20,6 +20,7 @@ pipeline {
         DISCORD_WEBHOOK = credentials('991ce248-5da9-4068-9aea-8a6c2c388a19')
     }
     parameters {
+        booleanParam defaultValue: true, description: "Build CentOS 8 image", name: 'BUILD_CENTOS_8'
         booleanParam defaultValue: true, description: "Build Debian Stretch image", name: 'BUILD_DEBIAN_STRETCH'
         booleanParam defaultValue: true, description: "Build Debian Buster image", name: 'BUILD_DEBIAN_BUSTER'
         booleanParam defaultValue: true, description: "Build Fedora image", name: 'BUILD_FEDORA'
@@ -52,6 +53,23 @@ pipeline {
             }
             //noinspection GroovyAssignabilityCheck
             parallel {
+                stage('CentOS 8') {
+                    agent {
+                        label "docker"
+                    }
+                    steps {
+                        script {
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f CentOS/Dockerfile --rm -t aliascash/alias-wallet-builder-centos-8:latest ."
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            sh "docker system prune --all --force"
+                        }
+                    }
+                }
                 stage('Debian Stretch') {
                     agent {
                         label "docker"
@@ -93,7 +111,7 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Fedora/Dockerfile --rm -t aliascash/alias-builder-fedora:latest ."
+                                sh "docker build -f Fedora/Dockerfile --rm -t aliascash/alias-wallet-builder-fedora:latest ."
                             }
                         }
                     }
@@ -159,6 +177,29 @@ pipeline {
             }
             //noinspection GroovyAssignabilityCheck
             parallel {
+                stage('CentOS 8') {
+                    when {
+                        expression {
+                            env.BUILD_CENTOS_8 == 'true'
+                        }
+                    }
+                    agent {
+                        label "docker"
+                    }
+                    steps {
+                        script {
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f CentOS/Dockerfile --rm -t aliascash/alias-wallet-builder-centos-8:latest ."
+                                sh "docker push aliascash/alias-wallet-builder-centos-8:latest"
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            sh "docker system prune --all --force"
+                        }
+                    }
+                }
                 stage('Debian Stretch') {
                     when {
                         expression {
@@ -217,8 +258,8 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Fedora/Dockerfile --rm -t aliascash/alias-builder-fedora:latest ."
-                                sh "docker push aliascash/alias-builder-fedora:latest"
+                                sh "docker build -f Fedora/Dockerfile --rm -t aliascash/alias-wallet-builder-fedora:latest ."
+                                sh "docker push aliascash/alias-wallet-builder-fedora:latest"
                             }
                         }
                     }
