@@ -25,8 +25,7 @@ pipeline {
         booleanParam defaultValue: true, description: "Build Fedora image", name: 'BUILD_FEDORA'
         booleanParam defaultValue: true, description: "Build Raspbian Buster image", name: 'BUILD_RASPBIAN_BUSTER'
         booleanParam defaultValue: true, description: "Build Ubuntu 18.04 image", name: 'BUILD_UBUNTU_18_04'
-        booleanParam defaultValue: true, description: "Build Ubuntu 19.04 image", name: 'BUILD_UBUNTU_19_04'
-        booleanParam defaultValue: true, description: "Build Ubuntu 19.10 image", name: 'BUILD_UBUNTU_19_10'
+        booleanParam defaultValue: true, description: "Build Ubuntu 20.04 image", name: 'BUILD_UBUNTU_20_04'
     }
     stages {
         stage('Notification') {
@@ -135,31 +134,14 @@ pipeline {
                         }
                     }
                 }
-                stage('Ubuntu 19.04') {
+                stage('Ubuntu 20.04') {
                     agent {
                         label "docker"
                     }
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Ubuntu/Dockerfile_19_04 --rm -t aliascash/alias-wallet-builder-ubuntu-19-04:latest ."
-                            }
-                        }
-                    }
-                    post {
-                        always {
-                            sh "docker system prune --all --force"
-                        }
-                    }
-                }
-                stage('Ubuntu 19.10') {
-                    agent {
-                        label "docker"
-                    }
-                    steps {
-                        script {
-                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Ubuntu/Dockerfile_19_10 --rm -t aliascash/alias-wallet-builder-ubuntu-19-10:latest ."
+                                sh "docker build -f Ubuntu/Dockerfile_20_04 --rm -t aliascash/alias-wallet-builder-ubuntu-20-04:latest ."
                             }
                         }
                     }
@@ -289,10 +271,10 @@ pipeline {
                         }
                     }
                 }
-                stage('Ubuntu 19.04') {
+                stage('Ubuntu 20.04') {
                     when {
                         expression {
-                            env.BUILD_UBUNTU_19_04 == 'true'
+                            env.BUILD_UBUNTU_20_04 == 'true'
                         }
                     }
                     agent {
@@ -301,31 +283,8 @@ pipeline {
                     steps {
                         script {
                             withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Ubuntu/Dockerfile_19_04 --rm -t aliascash/alias-wallet-builder-ubuntu-19-04:latest ."
-                                sh "docker push aliascash/alias-wallet-builder-ubuntu-19-04:latest"
-                            }
-                        }
-                    }
-                    post {
-                        always {
-                            sh "docker system prune --all --force"
-                        }
-                    }
-                }
-                stage('Ubuntu 19.10') {
-                    when {
-                        expression {
-                            env.BUILD_UBUNTU_19_10 == 'true'
-                        }
-                    }
-                    agent {
-                        label "docker"
-                    }
-                    steps {
-                        script {
-                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-                                sh "docker build -f Ubuntu/Dockerfile_19_10 --rm -t aliascash/alias-wallet-builder-ubuntu-19-10:latest ."
-                                sh "docker push aliascash/alias-wallet-builder-ubuntu-19-10:latest"
+                                sh "docker build -f Ubuntu/Dockerfile_20_04 --rm -t aliascash/alias-wallet-builder-ubuntu-20-04:latest ."
+                                sh "docker push aliascash/alias-wallet-builder-ubuntu-20-04:latest"
                             }
                         }
                     }
