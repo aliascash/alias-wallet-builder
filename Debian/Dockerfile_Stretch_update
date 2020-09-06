@@ -9,7 +9,7 @@ MAINTAINER HLXEasy <hlxeasy@gmail.com>
 RUN rm -rf /var/lib/apt/lists/* \
  && apt-get update -y \
  && apt-get install -y gcc-9-base libgcc-9-dev libc6-dev \
- && apt-get upgrade -y \
+ && apt-get update -y \
  && apt-get install -y --no-install-recommends \
     cmake \
     libqt5network5 \
