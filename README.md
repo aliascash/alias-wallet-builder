@@ -1,34 +1,46 @@
-# Spectrecoin builder image
+# Alias builder image
 
-Build status: [![Build Status](https://ci.spectreproject.io/buildStatus/icon?job=Spectrecoin/spectre-builder/develop&build=10)](https://ci.spectreproject.io/job/Spectrecoin/job/spectre-builder/job/develop/)
+Build status: [![Build Status](https://ci.alias.cash/buildStatus/icon?job=Alias/alias-wallet-builder/develop&build=10)](https://ci.alias.cash/job/Alias/job/alias-wallet-builder/job/develop/)
 
-|              |   |   |    |
-|:--           |:--|:--|:---|
-| Debian       | [![Docker Stars](https://img.shields.io/docker/stars/spectreproject/spectre-builder-debian.svg)](https://hub.docker.com/r/spectreproject/spectre-builder-debian/) | [![Docker Pulls](https://img.shields.io/docker/pulls/spectreproject/spectre-builder-debian.svg)](https://hub.docker.com/r/spectreproject/spectre-builder-debian/) | [![ImageLayers](https://images.microbadger.com/badges/image/spectreproject/spectre-builder-debian.svg)](https://microbadger.com/#/images/spectreproject/spectre-builder-debian) |
-| Fedora       | [![Docker Stars](https://img.shields.io/docker/stars/spectreproject/spectre-builder-fedora.svg)](https://hub.docker.com/r/spectreproject/spectre-builder-fedora/) | [![Docker Pulls](https://img.shields.io/docker/pulls/spectreproject/spectre-builder-fedora.svg)](https://hub.docker.com/r/spectreproject/spectre-builder-fedora/) | [![ImageLayers](https://images.microbadger.com/badges/image/spectreproject/spectre-builder-fedora.svg)](https://microbadger.com/#/images/spectreproject/spectre-builder-fedora) |
-| Raspberry Pi | [![Docker Stars](https://img.shields.io/docker/stars/spectreproject/spectre-builder-raspi.svg)](https://hub.docker.com/r/spectreproject/spectre-builder-raspi/) | [![Docker Pulls](https://img.shields.io/docker/pulls/spectreproject/spectre-builder-raspi.svg)](https://hub.docker.com/r/spectreproject/spectre-builder-raspi/) | [![ImageLayers](https://images.microbadger.com/badges/image/spectreproject/spectre-builder-raspi.svg)](https://microbadger.com/#/images/spectreproject/spectre-builder-raspi)   |
-| Ubuntu       | [![Docker Stars](https://img.shields.io/docker/stars/spectreproject/spectre-builder-ubuntu.svg)](https://hub.docker.com/r/spectreproject/spectre-builder-ubuntu/) | [![Docker Pulls](https://img.shields.io/docker/pulls/spectreproject/spectre-builder-ubuntu.svg)](https://hub.docker.com/r/spectreproject/spectre-builder-ubuntu/) | [![ImageLayers](https://images.microbadger.com/badges/image/spectreproject/spectre-builder-ubuntu.svg)](https://microbadger.com/#/images/spectreproject/spectre-builder-ubuntu) |
+|                |   |   |    |
+|:--             |:--|:--|:---|
+| CentOS 8       | [![Docker Stars](https://img.shields.io/docker/stars/aliascash/alias-wallet-builder-centos-8.svg)](https://hub.docker.com/r/aliascash/alias-wallet-builder-centos-8/) | [![Docker Pulls](https://img.shields.io/docker/pulls/aliascash/alias-wallet-builder-centos-8.svg)](https://hub.docker.com/r/aliascash/alias-wallet-builder-centos-8/) | [![ImageLayers](https://images.microbadger.com/badges/image/aliascash/alias-wallet-builder-centos-8.svg)](https://microbadger.com/#/images/aliascash/alias-wallet-builder-centos-8) |
+| Debian Stretch | [![Docker Stars](https://img.shields.io/docker/stars/aliascash/alias-wallet-builder-debian-stretch.svg)](https://hub.docker.com/r/aliascash/alias-wallet-builder-debian-stretch/) | [![Docker Pulls](https://img.shields.io/docker/pulls/aliascash/alias-wallet-builder-debian-stretch.svg)](https://hub.docker.com/r/aliascash/alias-wallet-builder-debian-stretch/) | [![ImageLayers](https://images.microbadger.com/badges/image/aliascash/alias-wallet-builder-debian-stretch.svg)](https://microbadger.com/#/images/aliascash/alias-wallet-builder-debian-stretch) |
+| Debian Buster  | [![Docker Stars](https://img.shields.io/docker/stars/aliascash/alias-wallet-builder-debian-buster.svg)](https://hub.docker.com/r/aliascash/alias-wallet-builder-debian-buster/) | [![Docker Pulls](https://img.shields.io/docker/pulls/aliascash/alias-wallet-builder-debian-buster.svg)](https://hub.docker.com/r/aliascash/alias-wallet-builder-debian-buster/) | [![ImageLayers](https://images.microbadger.com/badges/image/aliascash/alias-wallet-builder-debian-buster.svg)](https://microbadger.com/#/images/aliascash/alias-wallet-builder-debian-buster) |
+| Fedora         | [![Docker Stars](https://img.shields.io/docker/stars/aliascash/alias-wallet-builder-fedora.svg)](https://hub.docker.com/r/aliascash/alias-wallet-builder-fedora/) | [![Docker Pulls](https://img.shields.io/docker/pulls/aliascash/alias-wallet-builder-fedora.svg)](https://hub.docker.com/r/aliascash/alias-wallet-builder-fedora/) | [![ImageLayers](https://images.microbadger.com/badges/image/aliascash/alias-wallet-builder-fedora.svg)](https://microbadger.com/#/images/aliascash/alias-wallet-builder-fedora) |
+| Raspberry Pi   | [![Docker Stars](https://img.shields.io/docker/stars/aliascash/alias-wallet-builder-raspi.svg)](https://hub.docker.com/r/aliascash/alias-wallet-builder-raspi/) | [![Docker Pulls](https://img.shields.io/docker/pulls/aliascash/alias-wallet-builder-raspi.svg)](https://hub.docker.com/r/aliascash/alias-wallet-builder-raspi/) | [![ImageLayers](https://images.microbadger.com/badges/image/aliascash/alias-wallet-builder-raspi.svg)](https://microbadger.com/#/images/aliascash/alias-wallet-builder-raspi)   |
+| Ubuntu 18.04   | [![Docker Stars](https://img.shields.io/docker/stars/aliascash/alias-wallet-builder-ubuntu-18-04.svg)](https://hub.docker.com/r/aliascash/alias-wallet-builder-ubuntu-18-04/) | [![Docker Pulls](https://img.shields.io/docker/pulls/aliascash/alias-wallet-builder-ubuntu-18-04.svg)](https://hub.docker.com/r/aliascash/alias-wallet-builder-ubuntu-18-04/) | [![ImageLayers](https://images.microbadger.com/badges/image/aliascash/alias-wallet-builder-ubuntu-18-04.svg)](https://microbadger.com/#/images/aliascash/alias-wallet-builder-ubuntu-18-04) |
+| Ubuntu 20.04   | [![Docker Stars](https://img.shields.io/docker/stars/aliascash/alias-wallet-builder-ubuntu-20-04.svg)](https://hub.docker.com/r/aliascash/alias-wallet-builder-ubuntu-20-04/) | [![Docker Pulls](https://img.shields.io/docker/pulls/aliascash/alias-wallet-builder-ubuntu-20-04.svg)](https://hub.docker.com/r/aliascash/alias-wallet-builder-ubuntu-20-04/) | [![ImageLayers](https://images.microbadger.com/badges/image/aliascash/alias-wallet-builder-ubuntu-20-04.svg)](https://microbadger.com/#/images/aliascash/alias-wallet-builder-ubuntu-20-04) |
 
-## Builder images for spectrecoin/spectrecoind compilation
+# Licensing
+
+- SPDX-FileCopyrightText: © 2020 Alias Developers
+- SPDX-FileCopyrightText: © 2016 SpectreCoin Developers
+
+SPDX-License-Identifier: MIT
+
+## Builder images for aliaswallet/aliaswalletd compilation
 
 This repository contains Dockerfiles to create builder images which could
-be used to compile [spectrecoind](https://github.com/spectrecoin/spectre)
-for various distributions. So with each build of spectrecoind it is not
+be used to compile [Alias wallet and daemon](https://github.com/aliascash/alias-wallet)
+for various distributions. So with each build of Alias it is not
 necessary to setup the required build environment again and again.
 
 ## Facts
 * Dockerfiles for the following distributions
-  * CentOS
-  * Debian
-  * Fedora
+  * CentOS 8
+  * Debian Stretch
+  * Debian Buster
+  * Fedora 32
   * Raspberry Pi
-  * Ubuntu
+  * Ubuntu 18.04
+  * Ubuntu 20.04
 * Installs all required default dependencies
 
 ## How it is build
 ```
 docker build \
     -f <distribution>/Dockerfile \
-    -t spectreproject/spectre-builder-<distribution>:latest \
+    -t aliascash/alias-wallet-builder-<distribution>:latest \
     .
 ```

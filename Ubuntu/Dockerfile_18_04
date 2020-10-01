@@ -1,3 +1,8 @@
+# SPDX-FileCopyrightText: © 2020 Alias Developers
+# SPDX-FileCopyrightText: © 2016 SpectreCoin Developers
+#
+# SPDX-License-Identifier: MIT
+
 FROM ubuntu:18.04
 MAINTAINER HLXEasy <hlxeasy@gmail.com>
 
@@ -13,6 +18,7 @@ RUN apt-get install -y --no-install-recommends \
     automake \
     build-essential \
     ca-certificates \
+    cmake \
     g++ \
     git \
     less \
@@ -22,6 +28,7 @@ RUN apt-get install -y --no-install-recommends \
     libqt5network5 \
     libqt5quick5 \
     libqt5quickwidgets5 \
+    libqt5svg5-dev \
     libqt5webchannel5-dev \
     libqt5websockets5-dev \
     libqt5webview5-dev \
