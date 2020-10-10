@@ -19,6 +19,7 @@ RUN apt-get install -y --no-install-recommends \
     build-essential \
     ca-certificates \
     g++ \
+    gpg \
     git \
     less \
     libboost1.65-all-dev \
@@ -45,6 +46,7 @@ RUN apt-get install -y --no-install-recommends \
     qtbase5-dev \
     qttools5-dev-tools \
     qtwebengine5-dev \
+    software-properties-common \
     wget \
  && apt-get clean
 
