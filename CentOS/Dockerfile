@@ -38,6 +38,7 @@ RUN yum update -y \
     patch \
     perl-core \
     pkg-config \
+    python3 \
     qt5-linguist \
     qt5-qtbase \
     qt5-qtbase-devel \
