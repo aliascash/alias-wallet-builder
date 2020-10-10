@@ -18,8 +18,8 @@ RUN apt-get install -y --no-install-recommends \
     automake \
     build-essential \
     ca-certificates \
-    cmake \
     g++ \
+    gpg \
     git \
     less \
     libboost1.65-all-dev \
@@ -46,6 +46,7 @@ RUN apt-get install -y --no-install-recommends \
     qtbase5-dev \
     qttools5-dev-tools \
     qtwebengine5-dev \
+    software-properties-common \
     wget \
  && apt-get clean
 
@@ -54,6 +55,13 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
  && locale-gen en_US.UTF-8 \
  && dpkg-reconfigure locales \
  && /usr/sbin/update-locale LANG=en_US.UTF-8
+
+# Add install CMake from Kitware as distro package is too old
+RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null \
+ && apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main' \
+ && apt-get update -y \
+ && apt-get install -y \
+    cmake
 
 # Prepare dependencies for CMake build
 WORKDIR /

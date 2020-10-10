@@ -19,7 +19,6 @@ RUN apt-get install -y --no-install-recommends \
     automake \
     build-essential \
     ca-certificates \
-    cmake \
     g++-7 \
     git \
     less \
@@ -55,6 +54,12 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
  && locale-gen en_US.UTF-8 \
  && dpkg-reconfigure locales \
  && /usr/sbin/update-locale LANG=en_US.UTF-8
+
+# Add backports repo and install CMake from there
+COPY Debian/buster-backports.list /etc/apt/sources.list.d/
+RUN apt-get update -y \
+ && apt-get -t buster-backports install -y \
+    cmake
 
 # Prepare dependencies for CMake build
 WORKDIR /
