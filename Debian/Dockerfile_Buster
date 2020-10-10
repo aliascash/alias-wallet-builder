@@ -58,7 +58,8 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
 # Add backports repo and install CMake from there
 COPY Debian/buster-backports.list /etc/apt/sources.list.d/
 RUN apt-get update -y \
- && apt-get -t buster-backports install cmake
+ && apt-get -t buster-backports install -y \
+    cmake
 
 # Prepare dependencies for CMake build
 WORKDIR /
