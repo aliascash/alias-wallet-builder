@@ -46,3 +46,11 @@ RUN yum install -y \
     qt5-qtwebsockets-devel \
     qt5-qtwebview-devel \
     wget
+
+# Prepare dependencies for CMake build
+WORKDIR /
+RUN git clone https://github.com/aliascash/alias-wallet --branch cmake-build \
+ && cd alias-wallet \
+ && ./scripts/cmake-build.sh -d \
+ && for i in $(ls -1 | grep -v cmake-build-cmdline) ; do rm -rf ${i} ; done \
+ && for i in .* ; do rm -rf ${i} ; done
