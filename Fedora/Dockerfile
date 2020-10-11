@@ -7,8 +7,7 @@ FROM fedora:32
 MAINTAINER HLXEasy <hlxeasy@gmail.com>
 
 ENV WORK_DIR=/data/work \
-    DEBIAN_FRONTEND=noninteractive \
-    LC_ALL=en_US.UTF-8
+    DEBIAN_FRONTEND=noninteractive
 
 # Mount point for development workspace
 RUN mkdir -p ${WORK_DIR}
@@ -33,6 +32,7 @@ RUN yum install -y \
     openssh-clients \
     openssl-devel \
     patch \
+    perl-Module-Load-Conditional \
     pkg-config \
     qt5 \
     qt5-devel \
@@ -45,7 +45,8 @@ RUN yum install -y \
     qt5-qtwebengine-devel \
     qt5-qtwebsockets-devel \
     qt5-qtwebview-devel \
-    wget
+    wget \
+    which
 
 # Prepare dependencies for CMake build
 WORKDIR /
