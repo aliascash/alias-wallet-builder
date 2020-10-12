@@ -67,7 +67,7 @@ RUN wget https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cm
  && cmake --version
 
 # For static linking
-RUN sed "s/enabled=0/enabled=1/g" /etc/yum.repos.d/CentOS-PowerTools.repo \
+RUN sed -i "s/enabled=0/enabled=1/g" /etc/yum.repos.d/CentOS-PowerTools.repo \
  && yum update -y \
  && yum install -y \
     glibc-static \
