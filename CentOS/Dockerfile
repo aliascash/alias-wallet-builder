@@ -14,10 +14,9 @@ USER 0
 RUN mkdir -p ${WORK_DIR}
 VOLUME ${WORK_DIR}
 
-RUN yum -y install \
-    epel-release
-
-RUN yum update -y \
+RUN yum install -y \
+    epel-release \
+ && yum update -y \
  && yum install -y \
     autoconf \
     automake \
@@ -57,6 +56,7 @@ RUN yum update -y \
 ENV PATH="/usr/local/openssl/bin:${PATH}" \
     CMAKE_VERSION=3.18.4
 
+# Default CMake is too old
 RUN wget https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}.tar.gz
  && tar -zxvf cmake-${CMAKE_VERSION}.tar.gz \
  && cd cmake-${CMAKE_VERSION} \
@@ -66,7 +66,15 @@ RUN wget https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cm
  && rm -rf cmake-${CMAKE_VERSION}* \
  && cmake --version
 
-# Prepare dependencies for CMake build
+# For static linking
+RUN sed "s/enabled=0/enabled=1/g" /etc/yum.repos.d/CentOS-PowerTools.repo \
+ && yum update -y \
+ && yum install -y \
+    glibc-static \
+    libstdc++-static \
+ && yum clean all
+
+# Build dependencies and store them right on the builder image
 WORKDIR /
 RUN git clone https://github.com/aliascash/alias-wallet --branch cmake-build \
  && cd alias-wallet \

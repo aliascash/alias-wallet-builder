@@ -13,18 +13,19 @@ ENV WORK_DIR=/data/work \
 RUN mkdir -p ${WORK_DIR}
 VOLUME ${WORK_DIR}
 
-RUN yum update -y
-
-RUN yum install -y \
+RUN yum update -y \
+ && yum install -y \
     autoconf \
     automake \
     boost-devel \
     gcc-c++ \
     git \
+    glibc-static \
     less \
     libcap-devel \
     libevent-devel \
     libseccomp-devel \
+    libstdc++-static \
     libtool \
     libzstd-devel \
     make \
@@ -46,9 +47,10 @@ RUN yum install -y \
     qt5-qtwebsockets-devel \
     qt5-qtwebview-devel \
     wget \
-    which
+    which \
+ && yum clean all
 
-# Prepare dependencies for CMake build
+# Build dependencies and store them right on the builder image
 WORKDIR /
 RUN git clone https://github.com/aliascash/alias-wallet --branch cmake-build \
  && cd alias-wallet \
