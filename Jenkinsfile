@@ -124,10 +124,10 @@ pipeline {
                 stage('Raspberry Pi Buster') {
                     steps {
                         script {
-                            echo "Raspi builder image disabled for now"
-//                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-//                                sh "docker build -f RaspberryPi/Dockerfile_Buster --rm -t aliascash/alias-wallet-builder-raspi-buster:latest ."
-//                            }
+//                            echo "Raspi builder image disabled for now"
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f RaspberryPi/Dockerfile_Buster_arm64v8 --rm -t aliascash/alias-wallet-builder-raspi-buster:latest ."
+                            }
                         }
                     }
                     post {
@@ -278,11 +278,10 @@ pipeline {
                     }
                     steps {
                         script {
-                            echo "Raspi builder image disabled for now"
-//                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
-//                                sh "docker build -f RaspberryPi/Dockerfile_Buster --rm -t aliascash/alias-wallet-builder-raspi-buster:latest ."
-//                                sh "docker push aliascash/alias-wallet-builder-raspi-buster:latest"
-//                            }
+                            withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                                sh "docker build -f RaspberryPi/Dockerfile_Buster_arm64v8 --rm -t aliascash/alias-wallet-builder-raspi-buster:latest ."
+                                sh "docker push aliascash/alias-wallet-builder-raspi-buster:latest"
+                            }
                         }
                     }
                     post {

@@ -1,0 +1,60 @@
+# SPDX-FileCopyrightText: © 2020 Alias Developers
+# SPDX-FileCopyrightText: © 2016 SpectreCoin Developers
+#
+# SPDX-License-Identifier: MIT
+
+FROM arm32v7/debian:buster-slim
+MAINTAINER HLXEasy <hlxeasy@gmail.com>
+
+COPY RaspberryPi/qemu-arm-static /usr/bin
+
+ENV WORK_DIR=/data/work
+
+RUN apt-get update -y \
+ && apt-get upgrade -y \
+ && apt-get clean
+
+RUN apt-get install -y --no-install-recommends \
+    autoconf \
+    automake \
+    build-essential \
+    ca-certificates \
+    cmake \
+    dialog \
+    g++-7 \
+    git \
+    less \
+    libboost1.67-all-dev \
+    libcap-dev \
+    libevent-dev \
+    libqt5network5 \
+    libqt5quick5 \
+    libqt5quickwidgets5 \
+    libqt5svg5-dev \
+    libqt5webchannel5-dev \
+    libqt5websockets5-dev \
+    libqt5webview5-dev \
+    libqt5widgets5 \
+    libseccomp-dev \
+    libssl-dev \
+    libtool \
+    libz-dev \
+    locales \
+    make \
+    mc \
+    openssh-client \
+    pkg-config \
+    qt5-default \
+    qtbase5-dev \
+    qttools5-dev-tools \
+    qtwebengine5-dev \
+    wget \
+ && apt-get clean
+
+# Prepare dependencies for CMake build
+WORKDIR /
+#RUN git clone https://github.com/aliascash/alias-wallet --branch cmake-build \
+# && cd alias-wallet \
+# && ./scripts/cmake-build.sh -d \
+# && for i in $(ls -1 | grep -v cmake-build-cmdline) ; do rm -rf ${i} ; done \
+# && for i in .* ; do rm -rf ${i} ; done
