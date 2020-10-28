@@ -52,7 +52,7 @@ RUN yum update -y \
 
 # Build dependencies and store them right on the builder image
 WORKDIR /
-RUN git clone https://github.com/aliascash/alias-wallet --branch cmake-build \
+RUN git clone https://github.com/aliascash/alias-wallet \
  && cd alias-wallet \
  && ./scripts/cmake-build.sh -d \
  && for i in $(ls -1 | grep -v cmake-build-cmdline) ; do rm -rf ${i} ; done \

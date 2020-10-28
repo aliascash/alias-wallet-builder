@@ -76,7 +76,7 @@ RUN sed -i "s/enabled=0/enabled=1/g" /etc/yum.repos.d/CentOS-PowerTools.repo \
 
 # Build dependencies and store them right on the builder image
 WORKDIR /
-RUN git clone https://github.com/aliascash/alias-wallet --branch cmake-build \
+RUN git clone https://github.com/aliascash/alias-wallet \
  && cd alias-wallet \
  && ./scripts/cmake-build.sh -d \
  && for i in $(ls -1 | grep -v cmake-build-cmdline) ; do rm -rf ${i} ; done \
