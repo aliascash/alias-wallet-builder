@@ -43,7 +43,7 @@ pipeline {
                 script {
                     withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
                         sh(
-                                script: """
+                                script: '''
                                     case ${IMAGE_TO_BUILD} in
                                         "centos-8")
                                             DOCKERFILE=CentOS/Dockerfile
@@ -72,7 +72,7 @@ pipeline {
                                     esac
                                     docker build -f ${DOCKERFILE} --rm -t aliascash/alias-wallet-builder-${IMAGE_TO_BUILD}:latest .
                                     docker push aliascash/alias-wallet-builder-${IMAGE_TO_BUILD}:latest
-                                """
+                                '''
                         )
                     }
                 }
