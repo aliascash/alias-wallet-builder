@@ -20,7 +20,7 @@ RUN zypper install -y \
     diffutils \
     file \
     git \
-    gtk2-devel \
+    glibc-devel-static \
     less \
     libcap-devel \
     libseccomp-devel \
