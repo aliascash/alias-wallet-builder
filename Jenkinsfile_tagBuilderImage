@@ -15,7 +15,7 @@ pipeline {
         disableConcurrentBuilds()
     }
     environment {
-        DISCORD_WEBHOOK = credentials('991ce248-5da9-4068-9aea-8a6c2c388a19')
+        DISCORD_WEBHOOK = credentials('DISCORD_WEBHOOK')
     }
     parameters {
         choice choices: ['centos-8', 'debian-stretch', 'debian-buster', 'fedora', 'opensuse-tumbleweed', 'raspi-buster', 'ubuntu-18-04', 'ubuntu-20-04'], description: 'Which image do you want to tag?', name: 'IMAGE_TO_TAG'
