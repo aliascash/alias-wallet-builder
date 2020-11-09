@@ -41,7 +41,7 @@ pipeline {
         stage('Tag Docker image') {
             steps {
                 script {
-                    withDockerRegistry(credentialsId: '051efa8c-aebd-40f7-9cfd-0053c413266e') {
+                    withDockerRegistry(credentialsId: 'DockerHub-Login') {
                         sh(
                                 script: '''
                                     case ${IMAGE_TO_BUILD} in
