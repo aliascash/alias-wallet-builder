@@ -72,6 +72,7 @@ pipeline {
                                     esac
                                     docker build -f ${DOCKERFILE} --rm -t aliascash/alias-wallet-builder-${IMAGE_TO_BUILD}:latest .
                                     docker push aliascash/alias-wallet-builder-${IMAGE_TO_BUILD}:latest
+                                    docker rmi aliascash/alias-wallet-builder-${IMAGE_TO_BUILD}:latest
                                 '''
                         )
                     }
@@ -80,9 +81,6 @@ pipeline {
         }
     }
     post {
-        always {
-            sh "docker system prune --all --force"
-        }
         success {
             script {
                 if (!hudson.model.Result.SUCCESS.equals(currentBuild.getPreviousBuild()?.getResult())) {

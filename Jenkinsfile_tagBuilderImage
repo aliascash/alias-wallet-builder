@@ -48,6 +48,8 @@ pipeline {
                                     docker pull aliascash/alias-wallet-builder-${IMAGE_TO_TAG}:${IMAGE_VERSION_TO_TAG}
                                     docker tag  aliascash/alias-wallet-builder-${IMAGE_TO_TAG}:${IMAGE_VERSION_TO_TAG} aliascash/alias-wallet-builder-${IMAGE_TO_TAG}:${TAG_TO_SET}
                                     docker push aliascash/alias-wallet-builder-${IMAGE_TO_TAG}:${TAG_TO_SET}
+                                    docker rmi aliascash/alias-wallet-builder-${IMAGE_TO_TAG}:${IMAGE_VERSION_TO_TAG}
+                                    docker rmi aliascash/alias-wallet-builder-${IMAGE_TO_TAG}:${TAG_TO_SET}
                                 '''
                         )
                     }
@@ -56,9 +58,6 @@ pipeline {
         }
     }
     post {
-        always {
-            sh "docker system prune --all --force"
-        }
         success {
             script {
                 if (!hudson.model.Result.SUCCESS.equals(currentBuild.getPreviousBuild()?.getResult())) {
