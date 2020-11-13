@@ -49,7 +49,7 @@ pipeline {
                                             DOCKERFILE=CentOS/Dockerfile
                                             ;;
                                         "debian-stretch")
-                                            DOCKERFILE=Debian/Dockerfile_Stretch
+                                            DOCKERFILE=Debian/Dockerfile_Stretch_update
                                             ;;
                                         "debian-buster")
                                             DOCKERFILE=Debian/Dockerfile_Buster
