@@ -12,7 +12,7 @@ pipeline {
         timestamps()
         timeout(time: 2, unit: 'HOURS')
         buildDiscarder(logRotator(numToKeepStr: '30', artifactNumToKeepStr: '5'))
-        disableConcurrentBuilds()
+//        disableConcurrentBuilds()
     }
     environment {
         DISCORD_WEBHOOK = credentials('DISCORD_WEBHOOK')
