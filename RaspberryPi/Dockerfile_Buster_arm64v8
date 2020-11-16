@@ -25,7 +25,6 @@ RUN apt-get install -y --no-install-recommends \
     g++-7 \
     git \
     less \
-    libboost1.67-all-dev \
     libcap-dev \
     libevent-dev \
     libqt5network5 \

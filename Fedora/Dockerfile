@@ -17,7 +17,6 @@ RUN yum update -y \
  && yum install -y \
     autoconf \
     automake \
-    boost-devel \
     gcc-c++ \
     git \
     glibc-static \

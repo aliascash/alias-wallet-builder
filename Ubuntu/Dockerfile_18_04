@@ -22,7 +22,6 @@ RUN apt-get install -y --no-install-recommends \
     gpg \
     git \
     less \
-    libboost1.65-all-dev \
     libcap-dev \
     libevent-dev \
     libqt5network5 \

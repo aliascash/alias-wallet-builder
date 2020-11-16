@@ -20,7 +20,6 @@ RUN yum install -y \
  && yum install -y \
     autoconf \
     automake \
-    boost-devel \
     diffutils \
     file \
     git \
