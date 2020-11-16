@@ -36,6 +36,10 @@ pipeline {
                         title: "$env.JOB_NAME",
                         webhookURL: DISCORD_WEBHOOK
                 )
+                script {
+                    currentBuild.displayName = "#${BUILD_NUMBER}: ${IMAGE_TO_BUILD}"
+//                    currentBuild.description = "..."
+                }
             }
         }
         stage('Tag Docker image') {
