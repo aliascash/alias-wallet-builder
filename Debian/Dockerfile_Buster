@@ -41,6 +41,7 @@ RUN apt-get install -y --no-install-recommends \
     mc \
     openssh-client \
     pkg-config \
+    python3 \
     qt5-default \
     qtbase5-dev \
     qttools5-dev-tools \
