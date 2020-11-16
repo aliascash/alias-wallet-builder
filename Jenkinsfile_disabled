@@ -65,11 +65,6 @@ pipeline {
                             }
                         }
                     }
-                    post {
-                        always {
-                            sh "docker system prune --all --force"
-                        }
-                    }
                 }
                 stage('Debian Stretch') {
                     agent {
@@ -80,11 +75,6 @@ pipeline {
                             withDockerRegistry(credentialsId: 'DockerHub-Login') {
                                 sh "docker build -f Debian/Dockerfile_Stretch_update --rm -t aliascash/alias-wallet-builder-debian-stretch:latest ."
                             }
-                        }
-                    }
-                    post {
-                        always {
-                            sh "docker system prune --all --force"
                         }
                     }
                 }
@@ -99,11 +89,6 @@ pipeline {
                             }
                         }
                     }
-                    post {
-                        always {
-                            sh "docker system prune --all --force"
-                        }
-                    }
                 }
                 stage('Fedora') {
                     agent {
@@ -114,11 +99,6 @@ pipeline {
                             withDockerRegistry(credentialsId: 'DockerHub-Login') {
                                 sh "docker build -f Fedora/Dockerfile --rm -t aliascash/alias-wallet-builder-fedora:latest ."
                             }
-                        }
-                    }
-                    post {
-                        always {
-                            sh "docker system prune --all --force"
                         }
                     }
                 }
@@ -133,11 +113,6 @@ pipeline {
                             }
                         }
                     }
-                    post {
-                        always {
-                            sh "docker system prune --all --force"
-                        }
-                    }
                 }
                 stage('Raspberry Pi Buster') {
                     steps {
@@ -146,11 +121,6 @@ pipeline {
                             withDockerRegistry(credentialsId: 'DockerHub-Login') {
                                 sh "docker build -f RaspberryPi/Dockerfile_Buster_arm64v8 --rm -t aliascash/alias-wallet-builder-raspi-buster:latest ."
                             }
-                        }
-                    }
-                    post {
-                        always {
-                            sh "docker system prune --all --force"
                         }
                     }
                 }
@@ -165,11 +135,6 @@ pipeline {
                             }
                         }
                     }
-                    post {
-                        always {
-                            sh "docker system prune --all --force"
-                        }
-                    }
                 }
                 stage('Ubuntu 20.04') {
                     agent {
@@ -180,11 +145,6 @@ pipeline {
                             withDockerRegistry(credentialsId: 'DockerHub-Login') {
                                 sh "docker build -f Ubuntu/Dockerfile_20_04 --rm -t aliascash/alias-wallet-builder-ubuntu-20-04:latest ."
                             }
-                        }
-                    }
-                    post {
-                        always {
-                            sh "docker system prune --all --force"
                         }
                     }
                 }
@@ -213,11 +173,6 @@ pipeline {
                             }
                         }
                     }
-                    post {
-                        always {
-                            sh "docker system prune --all --force"
-                        }
-                    }
                 }
                 stage('Debian Stretch') {
                     when {
@@ -234,11 +189,6 @@ pipeline {
                                 sh "docker build -f Debian/Dockerfile_Stretch_update --rm -t aliascash/alias-wallet-builder-debian-stretch:latest ."
                                 sh "docker push aliascash/alias-wallet-builder-debian-stretch:latest"
                             }
-                        }
-                    }
-                    post {
-                        always {
-                            sh "docker system prune --all --force"
                         }
                     }
                 }
@@ -259,11 +209,6 @@ pipeline {
                             }
                         }
                     }
-                    post {
-                        always {
-                            sh "docker system prune --all --force"
-                        }
-                    }
                 }
                 stage('Fedora') {
                     when {
@@ -280,11 +225,6 @@ pipeline {
                                 sh "docker build -f Fedora/Dockerfile --rm -t aliascash/alias-wallet-builder-fedora:latest ."
                                 sh "docker push aliascash/alias-wallet-builder-fedora:latest"
                             }
-                        }
-                    }
-                    post {
-                        always {
-                            sh "docker system prune --all --force"
                         }
                     }
                 }
@@ -305,11 +245,6 @@ pipeline {
                             }
                         }
                     }
-                    post {
-                        always {
-                            sh "docker system prune --all --force"
-                        }
-                    }
                 }
                 stage('Raspberry Pi Buster') {
                     when {
@@ -323,11 +258,6 @@ pipeline {
                                 sh "docker build -f RaspberryPi/Dockerfile_Buster_arm64v8 --rm -t aliascash/alias-wallet-builder-raspi-buster:latest ."
                                 sh "docker push aliascash/alias-wallet-builder-raspi-buster:latest"
                             }
-                        }
-                    }
-                    post {
-                        always {
-                            sh "docker system prune --all --force"
                         }
                     }
                 }
@@ -348,11 +278,6 @@ pipeline {
                             }
                         }
                     }
-                    post {
-                        always {
-                            sh "docker system prune --all --force"
-                        }
-                    }
                 }
                 stage('Ubuntu 20.04') {
                     when {
@@ -369,11 +294,6 @@ pipeline {
                                 sh "docker build -f Ubuntu/Dockerfile_20_04 --rm -t aliascash/alias-wallet-builder-ubuntu-20-04:latest ."
                                 sh "docker push aliascash/alias-wallet-builder-ubuntu-20-04:latest"
                             }
-                        }
-                    }
-                    post {
-                        always {
-                            sh "docker system prune --all --force"
                         }
                     }
                 }
