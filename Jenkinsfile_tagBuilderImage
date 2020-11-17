@@ -39,7 +39,7 @@ pipeline {
                 )
                 script {
                     currentBuild.displayName = "#${BUILD_NUMBER}: ${IMAGE_TO_TAG}"
-//                    currentBuild.description = "..."
+                    currentBuild.description = "${IMAGE_VERSION_TO_TAG} -> ${TAG_TO_SET}"
                 }
             }
         }
