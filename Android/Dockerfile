@@ -14,12 +14,16 @@ RUN apt-get update -y \
  && apt-get clean
 
 RUN apt-get install -y \
+    autoconf \
+    automake \
+    autopoint \
     build-essential \
     ca-certificates \
     cmake \
     curl \
     git \
     locales \
+    libtool \
     mc \
     python3 \
     unzip \
