@@ -19,7 +19,7 @@ pipeline {
         DOCKERFILE = ''
     }
     parameters {
-        choice choices: ['centos-8', 'debian-stretch', 'debian-buster', 'fedora', 'opensuse-tumbleweed', 'raspi-buster', 'ubuntu-18-04', 'ubuntu-20-04'], description: 'Which image do you want to build?', name: 'IMAGE_TO_BUILD'
+        choice choices: ['android', 'centos-8', 'debian-stretch', 'debian-buster', 'fedora', 'opensuse-tumbleweed', 'raspi-buster', 'ubuntu-18-04', 'ubuntu-20-04'], description: 'Which image do you want to build?', name: 'IMAGE_TO_BUILD'
     }
     stages {
         stage('Notification') {
@@ -49,6 +49,9 @@ pipeline {
                         sh(
                                 script: '''
                                     case ${IMAGE_TO_BUILD} in
+                                        "android")
+                                            DOCKERFILE=Android/Dockerfile
+                                            ;;
                                         "centos-8")
                                             DOCKERFILE=CentOS/Dockerfile
                                             ;;
