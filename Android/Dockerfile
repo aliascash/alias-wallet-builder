@@ -25,7 +25,9 @@ RUN apt-get install -y \
     locales \
     libtool \
     mc \
+    openjdk-11-jdk \
     python3 \
+    python3-pip \
     unzip \
     wget \
  && apt-get clean
@@ -36,9 +38,22 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
  && dpkg-reconfigure locales \
  && /usr/sbin/update-locale LANG=en_US.UTF-8
 
+# Install Qt
+# https://github.com/miurahr/aqtinstall
+RUN pip3 install aqtinstall \
+ && aqt install --outputdir /root/Qt 5.15.2 linux android \
+
+# Install Gradle
+ENV GRADLE_VERSION=6.5 \
+    GRADLE_HOME=/opt/gradle
+RUN wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip -P /tmp \
+ && unzip -d /opt/ /tmp/gradle-*.zip \
+ && rm -f /tmp/gradle-*.zip \
+ && ln -s /opt/gradle-${GRADLE_VERSION} /opt/gradle
+
 # Prepare dependencies for CMake build
 WORKDIR /
-RUN git clone https://github.com/aliascash/alias-wallet \
+RUN git clone https://github.com/aliascash/alias-wallet --branch downgradeTorVersion \
  && cd alias-wallet \
  && ./scripts/cmake-build-android_arm64.sh -d -t \
  && ./scripts/cmake-build-android_armv7.sh -d -t \
