@@ -41,7 +41,7 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
 # Install Qt
 # https://github.com/miurahr/aqtinstall
 RUN pip3 install aqtinstall \
- && aqt install --outputdir /root/Qt 5.15.2 linux android \
+ && aqt install --outputdir /root/Qt 5.15.2 linux android
 
 # Install Gradle
 ENV GRADLE_VERSION=6.5 \
