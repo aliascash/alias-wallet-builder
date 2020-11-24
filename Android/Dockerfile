@@ -53,7 +53,7 @@ RUN wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.
 
 # Prepare dependencies for CMake build
 WORKDIR /
-RUN git clone https://github.com/aliascash/alias-wallet --branch downgradeTorVersion \
+RUN git clone https://github.com/aliascash/alias-wallet \
  && cd alias-wallet \
  && ./scripts/cmake-build-android_arm64.sh -d -t \
  && ./scripts/cmake-build-android_armv7.sh -d -t \
