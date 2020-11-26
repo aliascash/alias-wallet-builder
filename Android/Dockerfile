@@ -62,3 +62,17 @@ RUN git clone https://github.com/aliascash/alias-wallet \
  && for i in .* ; do rm -rf ${i} ; done \
  && find /root/Archives/ -name "*.zip" -exec rm -f {} \; \
  && find /root/Archives/ -name "*.tar.gz" -exec rm -f {} \;
+
+# Android SDK
+ENV ANDROID_HOME=/root/Archives/Android \
+    JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+WORKDIR /root/Archives/Android
+RUN wget https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip \
+ && unzip commandlinetools-linux-6858069_latest.zip \
+ && rm -f commandlinetools-linux-6858069_latest.zip \
+ && yes | /root/Archives/Android/cmdline-tools/bin/sdkmanager --sdk_root=/root/Archives/Android/ --licenses \
+ && /root/Archives/Android/cmdline-tools/bin/sdkmanager \
+    "platforms;android-22" \
+    "build-tools;30.0.2"
+
+WORKDIR /alias-wallet/
