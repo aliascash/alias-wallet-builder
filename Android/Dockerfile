@@ -70,12 +70,12 @@ WORKDIR /root/Archives/Android
 RUN wget https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip \
  && unzip commandlinetools-linux-6858069_latest.zip \
  && rm -f commandlinetools-linux-6858069_latest.zip \
- && yes | /root/Archives/Android/cmdline-tools/bin/sdkmanager \
-    --sdk_root=/root/Archives/Android/ \
-    --licenses \
  && /root/Archives/Android/cmdline-tools/bin/sdkmanager \
     --sdk_root=/root/Archives/Android/ \
     "platforms;android-22" \
-    "build-tools;30.0.2"
+    "build-tools;30.0.2" \
+ && yes | /root/Archives/Android/cmdline-tools/bin/sdkmanager \
+    --sdk_root=/root/Archives/Android/ \
+    --licenses
 
 WORKDIR /alias-wallet/
