@@ -40,8 +40,10 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
 
 # Install Qt
 # https://github.com/miurahr/aqtinstall
+ENV QT_VERSION=5.15.2 \
+    QT_DIR=/root/Qt/${QT_VERSION}
 RUN pip3 install aqtinstall \
- && aqt install --outputdir /root/Qt 5.15.2 linux android
+ && aqt install --outputdir /root/Qt ${QT_VERSION} linux android
 
 # Install Gradle
 ENV GRADLE_VERSION=6.5 \
@@ -51,19 +53,7 @@ RUN wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.
  && rm -f /tmp/gradle-*.zip \
  && ln -s /opt/gradle-${GRADLE_VERSION} /opt/gradle
 
-# Prepare dependencies for CMake build
-WORKDIR /
-RUN git clone https://github.com/aliascash/alias-wallet \
- && cd alias-wallet \
- && ./scripts/cmake-build-android_arm64.sh -d -t \
- && ./scripts/cmake-build-android_armv7.sh -d -t \
- && ./scripts/cmake-build-android_x86-64.sh -d -t \
- && for i in $(ls -1 | grep -v cmake-build-cmdline) ; do rm -rf ${i} ; done \
- && for i in .* ; do rm -rf ${i} ; done \
- && find /root/Archives/ -name "*.zip" -exec rm -f {} \; \
- && find /root/Archives/ -name "*.tar.gz" -exec rm -f {} \;
-
-# Android SDK
+# Install Android SDK
 ENV ANDROID_HOME=/root/Archives/Android \
     JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 WORKDIR /root/Archives/Android
@@ -77,5 +67,17 @@ RUN wget https://dl.google.com/android/repository/commandlinetools-linux-6858069
  && yes | /root/Archives/Android/cmdline-tools/bin/sdkmanager \
     --sdk_root=/root/Archives/Android/ \
     --licenses
+
+# Prepare and build dependencies for CMake build
+WORKDIR /
+RUN git clone https://github.com/aliascash/alias-wallet \
+ && cd alias-wallet \
+ && ./scripts/cmake-build-android_arm64.sh -d -t \
+ && ./scripts/cmake-build-android_armv7.sh -d -t \
+ && ./scripts/cmake-build-android_x86-64.sh -d -t \
+ && for i in $(ls -1 | grep -v cmake-build-cmdline) ; do rm -rf ${i} ; done \
+ && for i in .* ; do rm -rf ${i} ; done \
+ && find /root/Archives/ -name "*.zip" -exec rm -f {} \; \
+ && find /root/Archives/ -name "*.tar.gz" -exec rm -f {} \;
 
 WORKDIR /alias-wallet/
