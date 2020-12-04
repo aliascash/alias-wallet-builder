@@ -63,7 +63,7 @@ RUN wget https://dl.google.com/android/repository/commandlinetools-linux-6858069
  && /root/Archives/Android/cmdline-tools/bin/sdkmanager \
     --sdk_root=/root/Archives/Android/ \
     "platforms;android-29" \
-    "build-tools;latest" \
+    "build-tools;30.0.2" \
  && yes | /root/Archives/Android/cmdline-tools/bin/sdkmanager \
     --sdk_root=/root/Archives/Android/ \
     --licenses
