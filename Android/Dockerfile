@@ -60,7 +60,7 @@ WORKDIR /root/Archives/Android
 RUN wget https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip \
  && unzip commandlinetools-linux-6858069_latest.zip \
  && rm -f commandlinetools-linux-6858069_latest.zip \
- && /root/Archives/Android/cmdline-tools/bin/sdkmanager \
+ && yes | /root/Archives/Android/cmdline-tools/bin/sdkmanager \
     --sdk_root=/root/Archives/Android/ \
     "platforms;android-29" \
     "build-tools;30.0.2" \
