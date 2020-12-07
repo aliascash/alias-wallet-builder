@@ -70,7 +70,7 @@ RUN wget https://dl.google.com/android/repository/commandlinetools-linux-6858069
 
 # Prepare and build dependencies for CMake build
 WORKDIR /
-RUN git clone https://github.com/aliascash/alias-wallet --branch developToAndroidRebase\
+RUN git clone https://github.com/aliascash/alias-wallet --branch develop_android \
  && cd alias-wallet \
  && ./scripts/cmake-build-android_arm64.sh -d -t \
  && ./scripts/cmake-build-android_armv7.sh -d -t \
