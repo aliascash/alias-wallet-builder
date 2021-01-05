@@ -5,9 +5,7 @@
 // SPDX-License-Identifier: MIT
 
 pipeline {
-    agent {
-        label "docker"
-    }
+    agent none
     options {
         timestamps()
         timeout(time: 4, unit: 'HOURS')
@@ -23,6 +21,9 @@ pipeline {
     }
     stages {
         stage('Notification') {
+            agent {
+                label "housekeeping"
+            }
             steps {
                 // Using result state 'ABORTED' to mark the message on discord with a white border.
                 // Makes it easier to distinguish job-start from job-finished
@@ -43,6 +44,14 @@ pipeline {
             }
         }
         stage('Tag Docker image') {
+            when {
+                expression {
+                    env.IMAGE_TO_BUILD != 'raspi-buster'
+                }
+            }
+            agent {
+                label "docker"
+            }
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'DockerHub-Login') {
@@ -67,9 +76,6 @@ pipeline {
                                         "opensuse-tumbleweed")
                                             DOCKERFILE=OpenSUSE/Dockerfile
                                             ;;
-                                        "raspi-buster")
-                                            DOCKERFILE=RaspberryPi/Dockerfile_Buster_arm64v8
-                                            ;;
                                         "ubuntu-18-04")
                                             DOCKERFILE=Ubuntu/Dockerfile_18_04
                                             ;;
@@ -77,6 +83,30 @@ pipeline {
                                             DOCKERFILE=Ubuntu/Dockerfile_20_04
                                             ;;
                                     esac
+                                    docker build -f ${DOCKERFILE} --rm -t aliascash/alias-wallet-builder-${IMAGE_TO_BUILD}:latest .
+                                    docker push aliascash/alias-wallet-builder-${IMAGE_TO_BUILD}:latest
+                                    docker rmi aliascash/alias-wallet-builder-${IMAGE_TO_BUILD}:latest
+                                '''
+                        )
+                    }
+                }
+            }
+        }
+        stage('Tag Docker image (Raspi)') {
+            when {
+                expression {
+                    env.IMAGE_TO_BUILD == 'raspi-buster'
+                }
+            }
+            agent {
+                label "raspi"
+            }
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'DockerHub-Login') {
+                        sh(
+                                script: '''
+                                    DOCKERFILE=RaspberryPi/Dockerfile_Buster_arm64v8
                                     docker build -f ${DOCKERFILE} --rm -t aliascash/alias-wallet-builder-${IMAGE_TO_BUILD}:latest .
                                     docker push aliascash/alias-wallet-builder-${IMAGE_TO_BUILD}:latest
                                     docker rmi aliascash/alias-wallet-builder-${IMAGE_TO_BUILD}:latest
