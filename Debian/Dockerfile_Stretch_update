@@ -64,9 +64,7 @@ RUN rm -rf /var/lib/apt/lists/* \
     libqt5webview5-dev \
     libqt5widgets5 \
     python3 \
- && apt-get clean
-
-RUN apt-get install -y \
+    qttools5-dev \
     qttools5-dev-tools \
  && apt-get clean
 
