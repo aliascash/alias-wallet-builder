@@ -32,6 +32,7 @@ RUN zypper install -y \
     pkg-config \
     python3 \
     libqt5-linguist \
+    libqt5-linguist-devel \
     libqt5-qtbase \
     libqt5-qtbase-devel \
     libqt5-qtdeclarative-devel \
