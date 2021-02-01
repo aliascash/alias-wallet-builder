@@ -43,7 +43,7 @@ pipeline {
                 }
             }
         }
-        stage('Tag Docker image') {
+        stage('Build Docker image') {
             when {
                 expression {
                     env.IMAGE_TO_BUILD != 'raspi-buster'
@@ -92,7 +92,7 @@ pipeline {
                 }
             }
         }
-        stage('Tag Docker image (Raspi)') {
+        stage('Build Docker image (Raspi)') {
             when {
                 expression {
                     env.IMAGE_TO_BUILD == 'raspi-buster'
