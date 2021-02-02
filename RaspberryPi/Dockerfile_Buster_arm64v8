@@ -9,7 +9,7 @@ MAINTAINER HLXEasy <hlxeasy@gmail.com>
 COPY RaspberryPi/qemu-aarch64-static /usr/bin
 
 ENV WORK_DIR=/data/work \
-    CMAKE_VERSION=3.18.4
+    CMAKE_VERSION=3.19.4
 
 RUN apt-get update -y \
  && apt-get upgrade -y \
@@ -20,7 +20,6 @@ RUN apt-get install -y --no-install-recommends \
     automake \
     build-essential \
     ca-certificates \
-    cmake \
     dialog \
     g++-7 \
     git \
@@ -54,14 +53,14 @@ RUN apt-get install -y --no-install-recommends \
  && apt-get clean
 
 # Default CMake is too old
-#RUN wget https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}.tar.gz \
-# && tar -zxvf cmake-${CMAKE_VERSION}.tar.gz \
-# && cd cmake-${CMAKE_VERSION} \
-# && ./bootstrap \
-# && make \
-# && make install \
-# && rm -rf cmake-${CMAKE_VERSION}* \
-# && cmake --version
+RUN wget https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}.tar.gz \
+ && tar -zxvf cmake-${CMAKE_VERSION}.tar.gz \
+ && cd cmake-${CMAKE_VERSION} \
+ && ./bootstrap \
+ && make \
+ && make install \
+ && rm -rf cmake-${CMAKE_VERSION}* \
+ && cmake --version
 
 # Prepare dependencies for CMake build
 WORKDIR /
