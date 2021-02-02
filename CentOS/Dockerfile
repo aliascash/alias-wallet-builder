@@ -62,6 +62,7 @@ RUN wget https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cm
  && ./bootstrap \
  && make \
  && make install \
+ && cd - \
  && rm -rf cmake-${CMAKE_VERSION}* \
  && cmake --version
 
