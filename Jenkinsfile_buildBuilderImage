@@ -17,7 +17,7 @@ pipeline {
         DOCKERFILE = ''
     }
     parameters {
-        choice choices: ['android', 'centos-8', 'debian-stretch', 'debian-buster', 'fedora', 'opensuse-tumbleweed', 'raspi-buster', 'ubuntu-18-04', 'ubuntu-20-04'], description: 'Which image do you want to build?', name: 'IMAGE_TO_BUILD'
+        choice choices: ['android', 'centos-8', 'debian-stretch', 'debian-buster', 'debian-buster-i386', 'fedora', 'opensuse-tumbleweed', 'raspi-buster', 'ubuntu-18-04', 'ubuntu-18-04-i386', 'ubuntu-20-04'], description: 'Which image do you want to build?', name: 'IMAGE_TO_BUILD'
     }
     stages {
         stage('Notification') {
@@ -70,6 +70,9 @@ pipeline {
                                         "debian-buster")
                                             DOCKERFILE=Debian/Dockerfile_Buster
                                             ;;
+                                        "debian-buster-i386")
+                                            DOCKERFILE=Debian/Dockerfile_Buster_i386
+                                            ;;
                                         "fedora")
                                             DOCKERFILE=Fedora/Dockerfile
                                             ;;
@@ -78,6 +81,9 @@ pipeline {
                                             ;;
                                         "ubuntu-18-04")
                                             DOCKERFILE=Ubuntu/Dockerfile_18_04
+                                            ;;
+                                        "ubuntu-18-04-i386")
+                                            DOCKERFILE=Ubuntu/Dockerfile_18_04_i386
                                             ;;
                                         "ubuntu-20-04")
                                             DOCKERFILE=Ubuntu/Dockerfile_20_04

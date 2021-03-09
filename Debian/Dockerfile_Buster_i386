@@ -1,0 +1,72 @@
+# SPDX-FileCopyrightText: © 2020 Alias Developers
+# SPDX-FileCopyrightText: © 2016 SpectreCoin Developers
+#
+# SPDX-License-Identifier: MIT
+
+FROM i386/debian:buster
+MAINTAINER HLXEasy <hlxeasy@gmail.com>
+
+ENV WORK_DIR=/data/work \
+    DEBIAN_FRONTEND=noninteractive \
+    LC_ALL=en_US.UTF-8
+
+RUN apt-get update -y \
+ && apt-get upgrade -y \
+ && apt-get clean
+
+RUN apt-get install -y --no-install-recommends \
+    autoconf \
+    automake \
+    build-essential \
+    ca-certificates \
+    g++-7 \
+    g++-multilib \
+    git \
+    less \
+    libcap-dev \
+    libevent-dev \
+    libqt5network5 \
+    libqt5quick5 \
+    libqt5quickwidgets5 \
+    libqt5svg5-dev \
+    libqt5webchannel5-dev \
+    libqt5websockets5-dev \
+    libqt5webview5-dev \
+    libqt5widgets5 \
+    libseccomp-dev \
+    libssl-dev \
+    libtool \
+    libz-dev \
+    locales \
+    make \
+    mc \
+    openssh-client \
+    pkg-config \
+    python3 \
+    qt5-default \
+    qtbase5-dev \
+    qttools5-dev \
+    qttools5-dev-tools \
+    qtwebengine5-dev \
+    wget \
+ && apt-get clean
+
+# Set locale to UTF8
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
+ && locale-gen en_US.UTF-8 \
+ && dpkg-reconfigure locales \
+ && /usr/sbin/update-locale LANG=en_US.UTF-8
+
+# Add backports repo and install CMake from there
+COPY Debian/buster-backports.list /etc/apt/sources.list.d/
+RUN apt-get update -y \
+ && apt-get -t buster-backports install -y \
+    cmake
+
+# Prepare dependencies for CMake build
+WORKDIR /
+RUN git clone https://github.com/aliascash/alias-wallet \
+ && cd alias-wallet \
+ && ./scripts/cmake-build.sh -d \
+ && for i in $(ls -1 | grep -v cmake-build-cmdline) ; do rm -rf ${i} ; done \
+ && for i in .* ; do rm -rf ${i} ; done
