@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-FROM fedora:32
+FROM fedora:33
 MAINTAINER HLXEasy <hlxeasy@gmail.com>
 
 ENV WORK_DIR=/data/work \
@@ -32,10 +32,11 @@ RUN yum update -y \
     openssh-clients \
     openssl-devel \
     patch \
+    perl \
     perl-Module-Load-Conditional \
     pkg-config \
-    qt5 \
-    qt5-devel \
+    qt5-linguist \
+    qt5-qtbase \
     qt5-qtbase-devel \
     qt5-qtdeclarative-devel \
     qt5-qtnetworkauth-devel \
