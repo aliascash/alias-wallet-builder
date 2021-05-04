@@ -1,0 +1,118 @@
+name: Master
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  # ==========================================================================
+  # Build all x86 Linux flavours
+  buildLinux:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_VERSION: 2.5
+    strategy:
+      matrix:
+        os: [centos, debian-buster, debian-buster-i386, debian-stretch, fedora, opensuse, ubuntu-18-04, ubuntu-18-04-i386, ubuntu-20-04]
+        include:
+          - os: centos
+            DOCKERFILE: CentOS/Dockerfile
+            DOCKERTAG: aliascash/alias-wallet-builder-centos-8
+
+          - os: debian-buster
+            DOCKERFILE: Debian/Dockerfile_Buster
+            DOCKERTAG: aliascash/alias-wallet-builder-buster
+
+          - os: debian-buster-i386
+            DOCKERFILE: Debian/Dockerfile_Buster_i386
+            DOCKERTAG: aliascash/alias-wallet-builder-buster-i386
+
+          - os: debian-stretch
+            DOCKERFILE: Debian/Dockerfile_Stretch_update
+            DOCKERTAG: aliascash/alias-wallet-builder-stretch
+
+          - os: fedora
+            DOCKERFILE: Fedora/Dockerfile
+            DOCKERTAG: aliascash/alias-wallet-builder-fedora
+
+          - os: opensuse
+            DOCKERFILE: OpenSUSE/Dockerfile
+            DOCKERTAG: aliascash/alias-wallet-builder-opensuse
+
+          - os: ubuntu-18-04
+            DOCKERFILE: Ubuntu/Dockerfile_18_04
+            DOCKERTAG: aliascash/alias-wallet-builder-ubuntu-18-04
+
+          - os: ubuntu-18-04-i386
+            DOCKERFILE: Ubuntu/Dockerfile_18_04_i386
+            DOCKERTAG: aliascash/alias-wallet-builder-ubuntu-18-04-i386
+
+          - os: ubuntu-20-04
+            DOCKERFILE: Ubuntu/Dockerfile_20_04
+            DOCKERTAG: aliascash/alias-wallet-builder-ubuntu-20-04
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }} #use username, not email
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          file: ${{ matrix.DOCKERFILE }}
+          context: .
+          tags: ${{ matrix.DOCKERTAG }}:${{ env.IMAGE_VERSION }}
+
+      - name: Image digest
+        run: |
+          echo ${{ steps.docker_build.outputs.digest }}
+
+  # ==========================================================================
+  # Build aarch64 version (Raspberry PI ARMv8)
+  buildARM:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_VERSION: 2.5
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Set up QEMU
+        id: qemu
+        uses: docker/setup-qemu-action@v1
+        with:
+          image: tonistiigi/binfmt:latest
+          platforms: arm64
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }} #use username, not email
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          file: RaspberryPi/Dockerfile_Buster_arm64v8
+          context: .
+          tags: aliascash/alias-wallet-builder-raspi-buster:${{ env.IMAGE_VERSION }}
+
+      - name: Image digest
+        run: |
+          echo ${{ steps.docker_build.outputs.digest }}
