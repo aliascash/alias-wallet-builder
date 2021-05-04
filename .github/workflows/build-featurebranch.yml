@@ -1,0 +1,42 @@
+name: Featurebranch
+on:
+  push:
+    branches-ignore:
+      - 'master'
+      - 'develop'
+
+jobs:
+  # ==========================================================================
+  # Build all x86 Linux flavours
+  buildLinux:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        distro: [ CentOS/Dockerfile, Debian/Dockerfile_Buster, Debian/Dockerfile_Buster_i386, Debian/Dockerfile_Stretch_update, Fedora/Dockerfile, OpenSUSE/Dockerfile, Ubuntu/Dockerfile_18_04, Ubuntu/Dockerfile_18_04_i386, Ubuntu/Dockerfile_20_04 ]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Build binaries
+        run: docker build -t local -f ${{ matrix.distro }} .
+        env:
+          GITHUB_CI_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # ==========================================================================
+  # Build aarch64 version (Raspberry PI ARMv8)
+  buildARM:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Set up QEMU
+        id: qemu
+        uses: docker/setup-qemu-action@v1
+        with:
+          image: tonistiigi/binfmt:latest
+          platforms: arm64
+      - name: Build binaries
+        run: docker build -t local -f RaspberryPi/Dockerfile_Buster_arm64v8 .
+        env:
+          GITHUB_CI_TOKEN: ${{ secrets.GITHUB_TOKEN }}
