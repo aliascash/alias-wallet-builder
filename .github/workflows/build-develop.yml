@@ -19,15 +19,15 @@ jobs:
 
           - os: debian-buster
             DOCKERFILE: Debian/Dockerfile_Buster
-            DOCKERTAG: aliascash/alias-wallet-builder-buster:latest
+            DOCKERTAG: aliascash/alias-wallet-builder-debian-buster:latest
 
           - os: debian-buster-i386
             DOCKERFILE: Debian/Dockerfile_Buster_i386
-            DOCKERTAG: aliascash/alias-wallet-builder-buster-i386:latest
+            DOCKERTAG: aliascash/alias-wallet-builder-debian-buster-i386:latest
 
           - os: debian-stretch
             DOCKERFILE: Debian/Dockerfile_Stretch_update
-            DOCKERTAG: aliascash/alias-wallet-builder-stretch:latest
+            DOCKERTAG: aliascash/alias-wallet-builder-debian-stretch:latest
 
           - os: fedora
             DOCKERFILE: Fedora/Dockerfile
@@ -35,7 +35,7 @@ jobs:
 
           - os: opensuse
             DOCKERFILE: OpenSUSE/Dockerfile
-            DOCKERTAG: aliascash/alias-wallet-builder-opensuse:latest
+            DOCKERTAG: aliascash/alias-wallet-builder-opensuse-tumbleweed:latest
 
           - os: ubuntu-18-04
             DOCKERFILE: Ubuntu/Dockerfile_18_04

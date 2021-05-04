@@ -10,7 +10,7 @@ jobs:
   buildLinux:
     runs-on: ubuntu-latest
     env:
-      IMAGE_VERSION: 2.5
+      IMAGE_VERSION: 2.6
     strategy:
       matrix:
         os: [centos, debian-buster, debian-buster-i386, debian-stretch, fedora, opensuse, ubuntu-18-04, ubuntu-18-04-i386, ubuntu-20-04]
@@ -19,19 +19,19 @@ jobs:
             DOCKERTAG: aliascash/alias-wallet-builder-centos-8
 
           - os: debian-buster
-            DOCKERTAG: aliascash/alias-wallet-builder-buster
+            DOCKERTAG: aliascash/alias-wallet-builder-debian-buster
 
           - os: debian-buster-i386
-            DOCKERTAG: aliascash/alias-wallet-builder-buster-i386
+            DOCKERTAG: aliascash/alias-wallet-builder-debian-buster-i386
 
           - os: debian-stretch
-            DOCKERTAG: aliascash/alias-wallet-builder-stretch
+            DOCKERTAG: aliascash/alias-wallet-builder-debian-stretch
 
           - os: fedora
             DOCKERTAG: aliascash/alias-wallet-builder-fedora
 
           - os: opensuse
-            DOCKERTAG: aliascash/alias-wallet-builder-opensuse
+            DOCKERTAG: aliascash/alias-wallet-builder-opensuse-tumbleweed
 
           - os: ubuntu-18-04
             DOCKERTAG: aliascash/alias-wallet-builder-ubuntu-18-04
@@ -67,7 +67,7 @@ jobs:
   buildARM:
     runs-on: ubuntu-latest
     env:
-      IMAGE_VERSION: 2.5
+      IMAGE_VERSION: 2.6
     steps:
       - uses: actions/checkout@v2
         with:
