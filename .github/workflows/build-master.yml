@@ -89,7 +89,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Tag latest images with release version
-        run: >
+        run: |
           docker pull aliascash/alias-wallet-builder-raspi-buster:latest
           docker tag  aliascash/alias-wallet-builder-raspi-buster:latest aliascash/alias-wallet-builder-raspi-buster:${{ env.IMAGE_VERSION }}
           docker push aliascash/alias-wallet-builder-raspi-buster:${{ env.IMAGE_VERSION }}
