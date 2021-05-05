@@ -57,7 +57,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Tag latest images with release version
-        run: >
+        run: |
           docker pull ${{ matrix.DOCKERTAG }}:latest
           docker tag  ${{ matrix.DOCKERTAG }}:latest ${{ matrix.DOCKERTAG }}:${{ env.IMAGE_VERSION }}
           docker push ${{ matrix.DOCKERTAG }}:${{ env.IMAGE_VERSION }}
