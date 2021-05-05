@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        distro: [ CentOS/Dockerfile, Debian/Dockerfile_Buster, Debian/Dockerfile_Buster_i386, Debian/Dockerfile_Stretch_update, Fedora/Dockerfile, OpenSUSE/Dockerfile, Ubuntu/Dockerfile_18_04, Ubuntu/Dockerfile_18_04_i386, Ubuntu/Dockerfile_20_04 ]
+        distro: [ Android/Dockerfile, CentOS/Dockerfile, Debian/Dockerfile_Buster, Debian/Dockerfile_Buster_i386, Debian/Dockerfile_Stretch_update, Fedora/Dockerfile, OpenSUSE/Dockerfile, Ubuntu/Dockerfile_18_04, Ubuntu/Dockerfile_18_04_i386, Ubuntu/Dockerfile_20_04 ]
     steps:
       - uses: actions/checkout@v2
         with:

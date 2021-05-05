@@ -11,8 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [centos, debian-buster, debian-buster-i386, debian-stretch, fedora, opensuse, ubuntu-18-04, ubuntu-18-04-i386, ubuntu-20-04]
+        os: [android, centos, debian-buster, debian-buster-i386, debian-stretch, fedora, opensuse, ubuntu-18-04, ubuntu-18-04-i386, ubuntu-20-04]
         include:
+          - os: android
+            DOCKERFILE: Android/Dockerfile
+            DOCKERTAG: aliascash/alias-wallet-builder-android:latest
+
           - os: centos
             DOCKERFILE: CentOS/Dockerfile
             DOCKERTAG: aliascash/alias-wallet-builder-centos-8:latest
