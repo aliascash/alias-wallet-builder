@@ -1,0 +1,23 @@
+# SPDX-FileCopyrightText: © 2020 Alias Developers
+#
+# SPDX-License-Identifier: MIT
+
+FROM aliascash/alias-wallet-builder-android:platform29
+MAINTAINER HLXEasy <hlxeasy@gmail.com>
+
+# Prepare and build dependencies for CMake build
+WORKDIR /
+RUN mv alias-wallet alias-wallet_original \
+ && git clone https://github.com/aliascash/alias-wallet --branch develop_android \
+ && cd alias-wallet \
+ && mv ../alias-wallet_original/* . \
+ && rm -rf cmake-build-cmdline-android*/boost_1_73_0 \
+ && ./scripts/cmake-build-android_arm64.sh -d -t \
+ && ./scripts/cmake-build-android_armv7.sh -d -t \
+ && ./scripts/cmake-build-android_x86-64.sh -d -t \
+ && for i in $(ls -1 | grep -v cmake-build-cmdline) ; do rm -rf ${i} ; done \
+ && for i in .* ; do rm -rf ${i} ; done \
+ && find /root/Archives/ -name "*.zip" -exec rm -f {} \; \
+ && find /root/Archives/ -name "*.tar.gz" -exec rm -f {} \;
+
+WORKDIR /alias-wallet/
