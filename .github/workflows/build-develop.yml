@@ -136,7 +136,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          file: Android/Dockerfile
+          file: Android/Dockerfile_updateOnlyAliasDependencies
           context: .
           tags: aliascash/alias-wallet-builder-android:latest
 

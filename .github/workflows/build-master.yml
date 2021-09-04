@@ -10,7 +10,7 @@ jobs:
   buildLinux:
     runs-on: ubuntu-latest
     env:
-      IMAGE_VERSION: 2.6
+      IMAGE_VERSION: 2.7
     strategy:
       matrix:
         os: [centos, debian-buster, debian-buster-i386, debian-stretch, fedora, opensuse, ubuntu-18-04, ubuntu-18-04-i386, ubuntu-20-04]
@@ -67,7 +67,7 @@ jobs:
   buildARM:
     runs-on: ubuntu-latest
     env:
-      IMAGE_VERSION: 2.6
+      IMAGE_VERSION: 2.7
     steps:
       - uses: actions/checkout@v2
         with:
@@ -99,7 +99,7 @@ jobs:
   buildAndroid:
     runs-on: self-hosted
     env:
-      IMAGE_VERSION: 2.6
+      IMAGE_VERSION: 2.7
     steps:
       - uses: actions/checkout@v2
         with:
