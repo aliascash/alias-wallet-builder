@@ -18,7 +18,7 @@ pipeline {
         DISCORD_WEBHOOK = credentials('DISCORD_WEBHOOK')
     }
     parameters {
-        choice choices: ['android', 'centos-8', 'debian-stretch', 'debian-buster', 'debian-buster-i386', 'fedora', 'opensuse-tumbleweed', 'raspi-buster', 'ubuntu-18-04', 'ubuntu-18-04-i386', 'ubuntu-20-04'], description: 'Which image do you want to tag?', name: 'IMAGE_TO_TAG'
+        choice choices: ['android', 'centos-8', 'debian-stretch', 'debian-buster', 'debian-buster-i386', 'debian-bullseye', 'fedora', 'opensuse-tumbleweed', 'raspi-buster', 'ubuntu-18-04', 'ubuntu-18-04-i386', 'ubuntu-20-04'], description: 'Which image do you want to tag?', name: 'IMAGE_TO_TAG'
         string defaultValue: 'latest', description: 'Which existing version to you want to tag?', name: 'IMAGE_VERSION_TO_TAG', trim: true
         string defaultValue: '', description: 'Which tag should be set?', name: 'TAG_TO_SET', trim: true
     }
