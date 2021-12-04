@@ -13,10 +13,13 @@ jobs:
       IMAGE_VERSION: 2.7
     strategy:
       matrix:
-        os: [centos, debian-buster, debian-buster-i386, debian-stretch, fedora, opensuse, ubuntu-18-04, ubuntu-18-04-i386, ubuntu-20-04]
+        os: [centos, debian-bullseye, debian-buster, debian-buster-i386, debian-stretch, fedora, opensuse, ubuntu-18-04, ubuntu-18-04-i386, ubuntu-20-04]
         include:
           - os: centos
             DOCKERTAG: aliascash/alias-wallet-builder-centos-8
+
+          - os: debian-bullseye
+            DOCKERTAG: aliascash/alias-wallet-builder-debian-bullseye
 
           - os: debian-buster
             DOCKERTAG: aliascash/alias-wallet-builder-debian-buster

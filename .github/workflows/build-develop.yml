@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [centos, debian-buster, debian-buster-i386, debian-stretch, fedora, opensuse, ubuntu-18-04, ubuntu-18-04-i386, ubuntu-20-04]
+        os: [centos, debian-bullseye, debian-buster, debian-buster-i386, debian-stretch, fedora, opensuse, ubuntu-18-04, ubuntu-18-04-i386, ubuntu-20-04]
         include:
           - os: centos
             DOCKERFILE: CentOS/Dockerfile
@@ -20,6 +20,10 @@ jobs:
           - os: debian-buster
             DOCKERFILE: Debian/Dockerfile_Buster
             DOCKERTAG: aliascash/alias-wallet-builder-debian-buster:latest
+
+          - os: debian-bullseye
+            DOCKERFILE: Debian/Dockerfile_Bullseye
+            DOCKERTAG: aliascash/alias-wallet-builder-debian-bullseye:latest
 
           - os: debian-buster-i386
             DOCKERFILE: Debian/Dockerfile_Buster_i386
